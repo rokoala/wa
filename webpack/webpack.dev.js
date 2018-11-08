@@ -10,6 +10,8 @@ module.exports = {
   },
   devServer: {
     contentBase: commonPath.outputPath,
-    compress: true
-  }
+    compress: true,
+    hot: true
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin()]
 };
