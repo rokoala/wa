@@ -13,11 +13,17 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 io.on('connection', socket => {
-    console.log('user connected');
+  console.log('New client connected');
 
-    socket.on('disconnecte',()=>{
-        console.log('user disconnected');
-    })
-})
+  socket.on('change color', color => {
+    console.log('Color Changed to', color);
+    io.sockets.emit('change color', color);
+  });
+  socket.on('disconnecte', () => {
+    console.log('user disconnected');
+  });
+});
 
-server.listen(port,()=>{console.log(`server listening to port 8000`)})
+server.listen(port, () => {
+  console.log(`server listening to port 8000`);
+});
