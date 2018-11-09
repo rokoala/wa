@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import SocketIOClient from 'socket.io-client';
+import Chat from './components/Chat.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class App extends Component {
   setColor(color) {
     this.setState({ color });
   }
+
   render() {
     const socket = SocketIOClient(this.state.endpoint);
 
@@ -29,15 +31,8 @@ class App extends Component {
     });
 
     return (
-      <div style={{ textAlign: 'center' }}>
-        <button onClick={() => this.send()}>Change Color</button>
-
-        <button id="blue" onClick={() => this.setColor('blue')}>
-          Blue
-        </button>
-        <button id="red" onClick={() => this.setColor('red')}>
-          Red
-        </button>
+      <div>
+        <Chat />
       </div>
     );
   }

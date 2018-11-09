@@ -19,11 +19,18 @@ io.on('connection', socket => {
     console.log('Color Changed to', color);
     io.sockets.emit('change color', color);
   });
-  socket.on('disconnecte', () => {
+  socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('error', function(err) {
+    console.log('received error from client:', client.id);
+    console.log(err);
   });
 });
 
-server.listen(port, () => {
+// starts a unix socket and listen for connections based on the port
+server.listen(port, err => {
+  if (err) throw err;
   console.log(`server listening to port 8000`);
 });
