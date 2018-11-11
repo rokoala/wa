@@ -18,7 +18,7 @@ const Header = styled.div`
   border-bottom: 1px solid;
 `;
 
-const InputPanel = styled.div`
+const InputPanel = styled.form`
   display: flex;
   align-items: center;
   padding: 20px;
@@ -36,25 +36,81 @@ const ChatPanel = styled.div`
 `;
 
 const Scrollable = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  height: 100%;
+  height: 500px;
   overflow: auto;
+`;
+
+const EndMessage = styled.div`
+  float:left
+  clear:'both'
 `;
 
 class Chat extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      history: [],
+      message: ''
     };
+    this.keyCount = 0;
+    this.panelRef = React.createRef();
     this.onSendMessage = this.onSendMessage.bind(this);
+    this.updateMessage = this.updateMessage.bind(this);
+    this.scrollChatToBottom = this.scrollChatToBottom.bind(this);
   }
-  onSendMessage() {
-    this.setState();
+  componentDidUpdate() {
+    this.scrollChatToBottom();
+  }
+  getKey() {
+    return this.keyCount++;
+  }
+  onSendMessage(evt) {
+    evt.preventDefault();
+    if (this.state.message != '') {
+      this.setState(prevState => {
+        return {
+          history: [
+            ...prevState.history,
+            {
+              author: 'Rodrigo',
+              text: this.state.message
+            }
+          ],
+          message: ''
+        };
+      });
+      this.inputMessage.focus();
+    }
+  }
+  updateMessage(evt) {
+    this.setState({
+      message: evt.target.value
+    });
+  }
+  scrollChatToBottom() {
+    this.panelRef.current.scrollTo(0, this.panelRef.current.scrollHeight);
   }
   render() {
+    const history = this.state.history.map(message => {
+      return (
+        <Card key={this.getKey()} style={{ margin: 3 }}>
+          <CardContent>
+            <Typography
+              style={{ color: 'lightgreen', fontWeight: 'bold' }}
+              gutterBottom
+            >
+              {message.author}
+            </Typography>
+            <Typography variant="body1">{message.text}</Typography>
+          </CardContent>
+        </Card>
+      );
+    });
+
+    const messageInputRef = input => {
+      this.inputMessage = input;
+    };
+
     return (
       <Paper
         style={{ maxWidth: 600, height: '100%', marginBottom: 40, padding: 20 }}
@@ -63,22 +119,27 @@ class Chat extends Component {
           <Typography variant="h4">Room</Typography>
         </Header>
         <ChatPanel>
-          <Scrollable>
-            <Card>
-              <CardContent>
-                <Typography variant="body1">teste</Typography>
-              </CardContent>
-            </Card>
+          <Scrollable ref={this.panelRef}>
+            {history}
+            <EndMessage />
           </Scrollable>
         </ChatPanel>
         <InputPanel>
-          <TextField style={{ flex: '1' }} placeholder="Digite aqui..." />
+          <TextField
+            autoFocus
+            inputRef={messageInputRef}
+            style={{ flex: '1' }}
+            value={this.state.message}
+            onChange={this.updateMessage}
+            placeholder="Digite aqui..."
+          />
           <Button
             onClick={this.onSendMessage}
             style={{ marginLeft: 20 }}
             mini
             variant="fab"
             color="primary"
+            type="submit"
           >
             <SendIcon />
           </Button>
