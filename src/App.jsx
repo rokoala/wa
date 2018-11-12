@@ -6,33 +6,13 @@ import Chat from './components/Chat.jsx';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      endpoint: 'http://localhost:8000',
-      color: 'white'
-    };
-    this.send = this.send.bind(this);
-  }
-
-  // method for emitting a socket.io event
-  send() {
-    const socket = SocketIOClient(this.state.endpoint);
-    socket.emit('change color', this.state.color);
-  }
-
-  setColor(color) {
-    this.setState({ color });
+    this.state = {};
   }
 
   render() {
-    const socket = SocketIOClient(this.state.endpoint);
-
-    socket.on('change color', color => {
-      document.body.style.backgroundColor = color;
-    });
-
     return (
       <div>
-        <Chat />
+        <Chat socketAdress="http://localhost:8000" />
       </div>
     );
   }

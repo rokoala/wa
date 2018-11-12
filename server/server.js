@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
+const chatManager = require('./chatManager.js');
 const app = express();
 
 // server port
@@ -12,12 +13,16 @@ const server = http.createServer(app);
 // creates a socket using the server instance
 const io = socketIO(server);
 
+// creates a new room
+const room = chatManager('testRoom');
+
 io.on('connection', socket => {
   console.log('New client connected');
 
-  socket.on('change color', color => {
-    console.log('Color Changed to', color);
-    io.sockets.emit('change color', color);
+  socket.on('add message', message => {
+    console.log('add message', message);
+    room.addMessage(message);
+    socket.broadcast.emit('add message', message);
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');
