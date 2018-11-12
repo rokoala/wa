@@ -22,10 +22,7 @@ export default class CardMessage extends Component {
     return (
       <Card style={this.cardStyle}>
         <CardContent>
-          <Typography
-            style={{ color: 'lightgreen', fontWeight: 'bold' }}
-            gutterBottom
-          >
+          <Typography style={{ fontWeight: 'bold' }} gutterBottom>
             {this.props.message.author}
           </Typography>
           <Typography variant="body1">{this.props.message.text}</Typography>

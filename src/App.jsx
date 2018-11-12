@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import SocketIOClient from 'socket.io-client';
 import Chat from './components/Chat.jsx';
+import UserLogin from './components/UserLogin.jsx';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
-  }
+    this.state = {
+      username: '',
+      chatEnabled: false
+    };
 
+    this.onLogin = this.onLogin.bind(this);
+  }
+  onLogin(username) {
+    this.setState({ username, chatEnabled: true });
+  }
   render() {
     return (
       <div>
-        <Chat socketAdress="http://localhost:8000" />
+        {this.state.chatEnabled ? (
+          <Chat
+            username={this.state.username}
+            socketAdress="http://localhost:8000"
+          />
+        ) : (
+          <UserLogin onLogin={this.onLogin} />
+        )}
       </div>
     );
   }

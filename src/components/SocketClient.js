@@ -6,8 +6,8 @@ export class SocketClient {
     this.endpoint = endpoint;
     this.socket = SocketIOClient(this.endpoint);
   }
-  addMessage(text) {
-    const message = { author: 'Rodrigo', text, id: uid() };
+  addMessage({ author, text }) {
+    const message = { author, text, id: uid() };
     this.socket.emit('add message', message);
     return message;
   }

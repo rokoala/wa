@@ -22,7 +22,8 @@ class Chat extends Component {
     super(props);
     this.state = {
       history: [],
-      message: ''
+      message: '',
+      username: this.props.username
     };
 
     this.socketClient = new SocketClient(props.socketAdress);
@@ -43,6 +44,7 @@ class Chat extends Component {
         </Header>
         <ChatPanel socketClient={this.socketClient} ref={this.chanelPanel} />
         <InputPanel
+          username={this.state.username}
           socketClient={this.socketClient}
           onMessageAdd={this.onMessageAdd}
         />

@@ -34,7 +34,10 @@ export default class InputPanel extends Component {
   onSendMessage(evt) {
     evt.preventDefault();
     if (this.state.message != '') {
-      const msg = this.socketClient.addMessage(this.state.message);
+      const msg = this.socketClient.addMessage({
+        author: this.props.username,
+        text: this.state.message
+      });
       this.props.onMessageAdd(msg);
       this.inputMessage.focus();
       this.setState({ message: '' });
