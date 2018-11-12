@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -33,7 +34,8 @@ export default class InputPanel extends Component {
   onSendMessage(evt) {
     evt.preventDefault();
     if (this.state.message != '') {
-      this.socketClient.addMessage(this.state.message);
+      const msg = this.socketClient.addMessage(this.state.message);
+      this.props.onMessageAdd(msg);
       this.inputMessage.focus();
       this.setState({ message: '' });
     }
@@ -63,3 +65,7 @@ export default class InputPanel extends Component {
     );
   }
 }
+
+InputPanel.propTypes = {
+  onMessageAdd: PropTypes.func
+};

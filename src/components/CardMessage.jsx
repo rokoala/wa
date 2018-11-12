@@ -6,10 +6,21 @@ import Typography from '@material-ui/core/Typography';
 export default class CardMessage extends Component {
   constructor(props) {
     super(props);
+
+    const cardStyleDefault = {
+      width: '50%',
+      margin: 5
+    };
+
+    this.cardStyle = Object.assign(
+      {},
+      cardStyleDefault,
+      props.fromMe ? { float: 'right' } : { float: 'left' }
+    );
   }
   render() {
     return (
-      <Card style={{ margin: 3 }}>
+      <Card style={this.cardStyle}>
         <CardContent>
           <Typography
             style={{ color: 'lightgreen', fontWeight: 'bold' }}

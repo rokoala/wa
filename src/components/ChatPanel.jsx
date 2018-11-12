@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import SocketClient from './SocketClient.js';
 import CardMessage from './CardMessage.jsx';
 import styled from 'styled-components';
 
@@ -23,7 +25,7 @@ const EndMessage = styled.div`
   clear:'both'
 `;
 
-export class ChatPanel extends Component {
+export default class ChatPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,18 +46,26 @@ export class ChatPanel extends Component {
         history: [...prevState.history, message]
       };
     });
-
     this.scrollChatToBottom();
   }
   onMessageReceived(message) {
     this.addMessage(message);
+    this.scrollChatToBottom();
   }
   scrollChatToBottom() {
-    this.panelRef.current.scrollTo(0, this.panelRef.current.scrollHeight);
+    setTimeout(() => {
+      this.panelRef.current.scrollTo(0, this.panelRef.current.scrollHeight);
+    }, 100);
   }
   render() {
     const history = this.state.history.map(message => {
-      return <CardMessage key={message.id} message={message} />;
+      return (
+        <CardMessage
+          key={message.id}
+          message={message}
+          fromMe={message.fromMe}
+        />
+      );
     });
 
     return (
@@ -69,4 +79,6 @@ export class ChatPanel extends Component {
   }
 }
 
-export default ChatPanel;
+ChatPanel.propTypes = {
+  socketClient: PropTypes.instanceOf(SocketClient)
+};

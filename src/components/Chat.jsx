@@ -26,6 +26,12 @@ class Chat extends Component {
     };
 
     this.socketClient = new SocketClient(props.socketAdress);
+    this.onMessageAdd = this.onMessageAdd.bind(this);
+    this.chanelPanel = React.createRef();
+  }
+  onMessageAdd(message) {
+    message.fromMe = true;
+    this.chanelPanel.current.addMessage(message);
   }
   render() {
     return (
@@ -35,8 +41,11 @@ class Chat extends Component {
         <Header>
           <Typography variant="h4">Room</Typography>
         </Header>
-        <ChatPanel socketClient={this.socketClient} />
-        <InputPanel socketClient={this.socketClient} />
+        <ChatPanel socketClient={this.socketClient} ref={this.chanelPanel} />
+        <InputPanel
+          socketClient={this.socketClient}
+          onMessageAdd={this.onMessageAdd}
+        />
       </Paper>
     );
   }
