@@ -32,7 +32,6 @@ export default class UserLogin extends Component {
     this.setState({ username: evt.currentTarget.value });
   }
   render() {
-    console.log(this.state.username);
     return (
       <FullScreen>
         <Login onSubmit={this.onLogin}>

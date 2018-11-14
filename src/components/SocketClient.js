@@ -6,13 +6,30 @@ export class SocketClient {
     this.endpoint = endpoint;
     this.socket = SocketIOClient(this.endpoint);
   }
+  addUser(username) {
+    this.socket.emit('socket:addUser', username);
+  }
   addMessage({ author, text }) {
     const message = { author, text, id: uid() };
-    this.socket.emit('add message', message);
+    this.socket.emit('addmessage', message);
     return message;
   }
-  onMessageReceived(cb) {
-    this.socket.on('add message', cb);
+  registerMessageHandler(onMessageReceived) {
+    this.socket.on('message', onMessageReceived);
+  }
+  unregisterMessageHandler() {
+    this.socket.off('message');
+  }
+  onlineUsers() {
+    return new Promise((resolve, reject) => {
+      console.log('promise');
+      this.socket.emit('socket:onlineUsers', (err, data) => {
+        console.log(err);
+        console.log(data);
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
   }
 }
 

@@ -1,5 +1,5 @@
 module.exports = name => {
-  let history = [];
+  const history = [];
 
   const addMessage = message => {
     history.push(message);
