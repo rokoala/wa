@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import UserIcon from '@material-ui/icons/PermIdentityTwoTone';
+import UserIcon from '@material-ui/icons/AccountCircleTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
 
 import {
@@ -52,7 +52,7 @@ export default class ListUserChat extends Component {
           {this.state.users.map(user => (
             <ListItem key={user.id}>
               <ListItemIcon>
-                <UserIcon style={{ fontSize: 40, color: '#22ff22' }} />
+                <UserIcon style={{ fontSize: 60 }} />
               </ListItemIcon>
               <ListItemText inset primary={user.username} />
             </ListItem>
