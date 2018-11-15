@@ -8,20 +8,20 @@ export default class CardMessage extends Component {
     super(props);
 
     const cardStyleDefault = {
-      width: '50%',
-      margin: 5
+      minWidth: 5,
+      margin: 2
     };
 
     this.cardStyle = Object.assign(
       {},
       cardStyleDefault,
-      props.fromMe ? { float: 'right' } : { float: 'left' }
+      props.fromMe ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }
     );
   }
   render() {
     return (
       <Card style={this.cardStyle}>
-        <CardContent>
+        <CardContent style={{ padding: 12 }}>
           <Typography style={{ fontWeight: 'bold' }} gutterBottom>
             {this.props.message.author}
           </Typography>

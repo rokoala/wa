@@ -4,20 +4,14 @@ import SocketClient from './SocketClient.js';
 import CardMessage from './CardMessage.jsx';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  position: relative;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  z-index: 1;
-`;
-
 const Scrollable = styled.div`
   height: 500px;
-  overflow: auto;
+  overflow-y: auto;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const EndMessage = styled.div`
@@ -74,12 +68,12 @@ export default class ChatPanel extends Component {
     });
 
     return (
-      <Wrapper>
-        <Scrollable ref={this.panelRef}>
+      <Scrollable ref={this.panelRef}>
+        <Content>
           {history}
           <EndMessage />
-        </Scrollable>
-      </Wrapper>
+        </Content>
+      </Scrollable>
     );
   }
 }
