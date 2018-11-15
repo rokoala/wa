@@ -1,21 +1,12 @@
 module.exports = () => {
   const clients = new Map();
 
-  // const addClient = client => {
-  //   clients.set(client.id, { client });
-  // };
-
   const registerClient = (client, user) => {
-    console.log('register user');
     clients.set(client.id, { client, user });
   };
 
   const removeClient = client => {
-    console.log('user disconnected');
-    console.log('client id', client.id);
-    console.log('clients:', Array.from(clients.keys()));
-    //clients.delete(client.id);
-    console.log('remove client');
+    clients.delete(client.id);
   };
 
   const onlineUsers = () => {
@@ -28,7 +19,6 @@ module.exports = () => {
   };
 
   return {
-    // addClient,
     registerClient,
     removeClient,
     onlineUsers

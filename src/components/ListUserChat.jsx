@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import UserIcon from '@material-ui/icons/PermIdentity';
+import UserIcon from '@material-ui/icons/PermIdentityTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
 
 import {
@@ -34,9 +34,7 @@ export default class ListUserChat extends Component {
     this.props.onClose(evt);
   }
   componentDidMount() {
-    console.log('did mount');
     this.props.socketClient.onlineUsers().then(users => {
-      console.log(users);
       this.setState({ users });
     });
   }
@@ -54,7 +52,7 @@ export default class ListUserChat extends Component {
           {this.state.users.map(user => (
             <ListItem key={user.id}>
               <ListItemIcon>
-                <UserIcon />
+                <UserIcon style={{ fontSize: 40, color: '#22ff22' }} />
               </ListItemIcon>
               <ListItemText inset primary={user.username} />
             </ListItem>

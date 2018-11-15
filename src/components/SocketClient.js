@@ -22,10 +22,7 @@ export class SocketClient {
   }
   onlineUsers() {
     return new Promise((resolve, reject) => {
-      console.log('promise');
       this.socket.emit('socket:onlineUsers', (err, data) => {
-        console.log(err);
-        console.log(data);
         if (err) reject(err);
         resolve(data);
       });

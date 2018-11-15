@@ -54,7 +54,6 @@ export default class ChatPanel extends Component {
     this.scrollChatToBottom();
   }
   onMessageReceived(message) {
-    console.log(message);
     this.addMessage(message);
     this.scrollChatToBottom();
   }

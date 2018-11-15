@@ -16,9 +16,19 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
+        test: /\.(css|scss)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(woff2|ttf|woff|eot)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: commonPath.fontsFolder
+            }
+          }
+        ]
       }
     ]
   },
