@@ -36,7 +36,23 @@ class Chat extends Component {
     this.displayRoomInfo = this.displayRoomInfo.bind(this);
     this.onListUserChatClose = this.onListUserChatClose.bind(this);
     this.onMessageAdd = this.onMessageAdd.bind(this);
+    this.onMessageReceived = this.onMessageReceived.bind(this);
+
     this.chanelPanel = React.createRef();
+  }
+  componentDidMount() {
+    this.socketClient.registerMessageHandler(this.onMessageReceived);
+  }
+  componentWillUnmount() {
+    this.socketClient.unregisterMessageHandler();
+  }
+  onMessageReceived(message) {
+    this.setState(prevState => {
+      return {
+        history: [...prevState.history, message]
+      };
+    });
+    this.chanelPanel.current.addMessage(message);
   }
   onMessageAdd(message) {
     message.fromMe = true;

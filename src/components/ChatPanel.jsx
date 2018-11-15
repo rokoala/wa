@@ -27,17 +27,11 @@ export default class ChatPanel extends Component {
       history: this.props.initHistory
     };
 
-    this.socketClient = this.props.socketClient;
-
     this.panelRef = React.createRef();
     this.scrollChatToBottom = this.scrollChatToBottom.bind(this);
-    this.onMessageReceived = this.onMessageReceived.bind(this);
   }
   componentDidMount() {
-    this.socketClient.registerMessageHandler(this.onMessageReceived);
-  }
-  componentWillUnmount() {
-    this.socketClient.unregisterMessageHandler();
+    this.scrollChatToBottom();
   }
   addMessage(message) {
     this.setState(prevState => {
@@ -45,10 +39,6 @@ export default class ChatPanel extends Component {
         history: [...prevState.history, message]
       };
     });
-    this.scrollChatToBottom();
-  }
-  onMessageReceived(message) {
-    this.addMessage(message);
     this.scrollChatToBottom();
   }
   scrollChatToBottom() {
