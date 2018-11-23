@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
+import { appLogin } from '../actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const FullScreen = styled.div`
   display: flex;
@@ -15,7 +18,7 @@ const Login = styled.form`
   box-shadow: 1px rgba(0, 0, 0, 0.9);
 `;
 
-export default class UserLogin extends Component {
+class UserLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,12 +27,12 @@ export default class UserLogin extends Component {
     this.onChangeInput = this.onChangeInput.bind(this);
     this.onLogin = this.onLogin.bind(this);
   }
-  onLogin(evt) {
-    evt.preventDefault();
-    this.props.onLogin(this.state.username);
-  }
   onChangeInput(evt) {
     this.setState({ username: evt.currentTarget.value });
+  }
+  onLogin(evt) {
+    evt.preventDefault();
+    this.props.appLogin(this.state.username);
   }
   render() {
     return (
@@ -55,3 +58,11 @@ export default class UserLogin extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ appLogin }, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserLogin);

@@ -4,33 +4,31 @@ import 'typeface-roboto';
 import Chat from './components/Chat.jsx';
 import UserLogin from './components/UserLogin.jsx';
 import ListUserChat from './components/ListUserChat.jsx';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { appLogin } from './actions';
+
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: '',
-      chatEnabled: false
-    };
-
-    this.onLogin = this.onLogin.bind(this);
-  }
-  onLogin(username) {
-    this.setState({ username, chatEnabled: true });
   }
   render() {
+    const { username, chatEnabled } = this.props;
     return (
       <div>
-        {this.state.chatEnabled ? (
-          <Chat
-            username={this.state.username}
-            socketAdress="http://localhost:8000"
-          />
+        {chatEnabled ? (
+          <Chat username={username} socketAdress="http://0.0.0.0:8000" />
         ) : (
-          <UserLogin onLogin={this.onLogin} />
+          <UserLogin />
         )}
       </div>
     );
   }
 }
 
-export default hot(module)(App);
+const mapStateToProps = state => ({
+  username: state.app.username,
+  chatEnabled: state.app.chatEnabled
+});
+
+export default connect(mapStateToProps)(hot(module)(App));
