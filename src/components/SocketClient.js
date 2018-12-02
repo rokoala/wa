@@ -1,5 +1,7 @@
 import SocketIOClient from 'socket.io-client';
 import uid from 'uid';
+import { addMessage } from '../actions';
+import { Store } from '../store';
 
 export class SocketClient {
   constructor(endpoint) {
@@ -12,6 +14,10 @@ export class SocketClient {
   addMessage({ author, text }) {
     const message = { author, text, id: uid() };
     this.socket.emit('addmessage', message);
+
+    message.fromMe = true;
+    Store.dispatch(addMessage(message));
+
     return message;
   }
   registerMessageHandler(onMessageReceived) {

@@ -9,3 +9,7 @@ export const addMessage = message => ({
   type: chatActions.ADD_MESSAGE,
   message
 });
+
+export const toogleRoomInfo = () => ({
+  type: appActions.TOOGLE_ROOM_INFO
+});

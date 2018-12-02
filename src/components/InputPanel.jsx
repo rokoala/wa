@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import SocketClient from './SocketClient.js';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
+import { connect } from 'react-redux';
 
 const Wrapper = styled.form`
   display: flex;
@@ -11,7 +13,7 @@ const Wrapper = styled.form`
   padding: 20px;
 `;
 
-export default class InputPanel extends Component {
+class InputPanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,11 +36,11 @@ export default class InputPanel extends Component {
   onSendMessage(evt) {
     evt.preventDefault();
     if (this.state.message != '') {
-      const msg = this.socketClient.addMessage({
+      this.socketClient.addMessage({
         author: this.props.username,
         text: this.state.message
       });
-      this.props.onMessageAdd(msg);
+
       this.inputMessage.focus();
       this.setState({ message: '' });
     }
@@ -70,5 +72,11 @@ export default class InputPanel extends Component {
 }
 
 InputPanel.propTypes = {
-  onMessageAdd: PropTypes.func
+  socketClient: PropTypes.instanceOf(SocketClient)
 };
+
+const mapStateToProps = state => ({
+  username: state.app.username
+});
+
+export default connect(mapStateToProps)(InputPanel);

@@ -2,7 +2,8 @@ import { appActions } from '../actions/actionTypes';
 
 const initialState = {
   username: '',
-  chatEnabled: false
+  chatEnabled: false,
+  roomInfo: false
 };
 
 export const app = (state = initialState, action) => {
@@ -12,6 +13,11 @@ export const app = (state = initialState, action) => {
         ...state,
         username: action.username,
         chatEnabled: true
+      };
+    case appActions.TOOGLE_ROOM_INFO:
+      return {
+        ...state,
+        roomInfo: !state.roomInfo
       };
     default:
       return state;

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import UserIcon from '@material-ui/icons/AccountCircleTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
-
 import {
   List,
   ListItem,
@@ -11,6 +9,9 @@ import {
   Typography
 } from '@material-ui/core';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toogleRoomInfo } from '../actions';
 
 const Header = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ const Header = styled.div`
   border-bottom: 1px solid;
 `;
 
-export default class ListUserChat extends Component {
+class ListUserChat extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +32,8 @@ export default class ListUserChat extends Component {
     this.onCloseClick = this.onCloseClick.bind(this);
   }
   onCloseClick(evt) {
-    this.props.onClose(evt);
+    evt.preventDefault();
+    this.props.toogleRoomInfo();
   }
   componentDidMount() {
     this.props.socketClient.onlineUsers().then(users => {
@@ -62,3 +64,11 @@ export default class ListUserChat extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ toogleRoomInfo }, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(ListUserChat);

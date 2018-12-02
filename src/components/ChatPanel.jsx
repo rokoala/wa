@@ -38,7 +38,7 @@ class ChatPanel extends Component {
     this.scrollChatToBottom();
   }
   componentWillUnmount() {
-    this.prop.socketClient.unregisterMessageHandler();
+    this.props.socketClient.unregisterMessageHandler();
   }
   onMessageReceived(message) {
     this.props.addMessage(message);
