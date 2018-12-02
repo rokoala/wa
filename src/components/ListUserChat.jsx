@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import UserIcon from '@material-ui/icons/AccountCircleTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { toogleRoomInfo } from '../actions';
 import {
   List,
   ListItem,
@@ -8,10 +12,6 @@ import {
   ListItemText,
   Typography
 } from '@material-ui/core';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { toogleRoomInfo } from '../actions';
 
 const Header = styled.div`
   display: flex;
@@ -65,10 +65,14 @@ class ListUserChat extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  socketClient: state.app.socketClient
+});
+
 const mapDispatchToProps = dispatch =>
   bindActionCreators({ toogleRoomInfo }, dispatch);
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ListUserChat);

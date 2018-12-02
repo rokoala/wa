@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import SocketClient from './SocketClient.js';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -71,12 +69,9 @@ class InputPanel extends Component {
   }
 }
 
-InputPanel.propTypes = {
-  socketClient: PropTypes.instanceOf(SocketClient)
-};
-
 const mapStateToProps = state => ({
-  username: state.app.username
+  username: state.app.username,
+  socketClient: state.app.socketClient
 });
 
 export default connect(mapStateToProps)(InputPanel);

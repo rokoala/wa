@@ -10,6 +10,11 @@ export const addMessage = message => ({
   message
 });
 
+export const addSocketClient = socketClient => ({
+  type: appActions.ADD_SOCKET_CLIENT,
+  socketClient
+});
+
 export const toogleRoomInfo = () => ({
   type: appActions.TOOGLE_ROOM_INFO
 });

@@ -3,7 +3,8 @@ import { appActions } from '../actions/actionTypes';
 const initialState = {
   username: '',
   chatEnabled: false,
-  roomInfo: false
+  roomInfo: false,
+  socketClient: null
 };
 
 export const app = (state = initialState, action) => {
@@ -18,6 +19,11 @@ export const app = (state = initialState, action) => {
       return {
         ...state,
         roomInfo: !state.roomInfo
+      };
+    case appActions.ADD_SOCKET_CLIENT:
+      return {
+        ...state,
+        socketClient: action.socketClient
       };
     default:
       return state;

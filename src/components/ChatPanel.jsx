@@ -75,7 +75,8 @@ ChatPanel.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  history: state.chat.history
+  history: state.chat.history,
+  socketClient: state.app.socketClient
 });
 
 const mapDispatchToProps = dispatch =>
