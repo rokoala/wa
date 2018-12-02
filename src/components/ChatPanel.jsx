@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import SocketClient from './SocketClient.js';
 import CardMessage from './CardMessage.jsx';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addMessage } from '../actions';
 
 const Scrollable = styled.div`
   height: 500px;
@@ -19,27 +22,26 @@ const EndMessage = styled.div`
   clear:'both'
 `;
 
-export default class ChatPanel extends Component {
+class ChatPanel extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      history: this.props.initHistory
-    };
-
     this.panelRef = React.createRef();
     this.scrollChatToBottom = this.scrollChatToBottom.bind(this);
+    this.onMessageReceived = this.onMessageReceived.bind(this);
   }
   componentDidMount() {
+    this.props.socketClient.registerMessageHandler(this.onMessageReceived);
     this.scrollChatToBottom();
   }
-  addMessage(message) {
-    this.setState(prevState => {
-      return {
-        history: [...prevState.history, message]
-      };
-    });
+  componentDidUpdate() {
     this.scrollChatToBottom();
+  }
+  componentWillUnmount() {
+    this.prop.socketClient.unregisterMessageHandler();
+  }
+  onMessageReceived(message) {
+    this.props.addMessage(message);
   }
   scrollChatToBottom() {
     setTimeout(() => {
@@ -47,7 +49,7 @@ export default class ChatPanel extends Component {
     }, 100);
   }
   render() {
-    const history = this.state.history.map(message => {
+    const history = this.props.history.map(message => {
       return (
         <CardMessage
           key={message.id}
@@ -71,3 +73,15 @@ export default class ChatPanel extends Component {
 ChatPanel.propTypes = {
   socketClient: PropTypes.instanceOf(SocketClient)
 };
+
+const mapStateToProps = state => ({
+  history: state.chat.history
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addMessage }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ChatPanel);

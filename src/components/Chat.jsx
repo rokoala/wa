@@ -6,6 +6,9 @@ import SocketClient from './SocketClient.js';
 import InputPanel from './InputPanel.jsx';
 import ChatPanel from './ChatPanel.jsx';
 import ListUserChat from './ListUserChat.jsx';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addMessage } from '../actions';
 
 const Header = styled.div`
   display: flex;
@@ -35,33 +38,10 @@ class Chat extends Component {
     this.onMessageAdd = this.onMessageAdd.bind(this);
     this.displayRoomInfo = this.displayRoomInfo.bind(this);
     this.onListUserChatClose = this.onListUserChatClose.bind(this);
-    this.onMessageAdd = this.onMessageAdd.bind(this);
-    this.onMessageReceived = this.onMessageReceived.bind(this);
-
-    this.chanelPanel = React.createRef();
-  }
-  componentDidMount() {
-    this.socketClient.registerMessageHandler(this.onMessageReceived);
-  }
-  componentWillUnmount() {
-    this.socketClient.unregisterMessageHandler();
-  }
-  onMessageReceived(message) {
-    this.setState(prevState => {
-      return {
-        history: [...prevState.history, message]
-      };
-    });
-    this.chanelPanel.current.addMessage(message);
   }
   onMessageAdd(message) {
     message.fromMe = true;
-    this.setState(prevState => {
-      return {
-        history: [...prevState.history, message]
-      };
-    });
-    this.chanelPanel.current.addMessage(message);
+    this.props.addMessage(message);
   }
   onListUserChatClose(evt) {
     this.setState({ roomInfo: false });
@@ -84,11 +64,7 @@ class Chat extends Component {
             <Header onClick={this.displayRoomInfo}>
               <Typography variant="h4">Room</Typography>
             </Header>
-            <ChatPanel
-              socketClient={this.socketClient}
-              initHistory={this.state.history}
-              ref={this.chanelPanel}
-            />
+            <ChatPanel socketClient={this.socketClient} />
             <InputPanel
               username={this.state.username}
               socketClient={this.socketClient}
@@ -105,4 +81,14 @@ Chat.propTypes = {
   socketAdress: PropTypes.string.isRequired
 };
 
-export default Chat;
+const mapStateToProps = state => ({
+  history: state.chat.history
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ addMessage }, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chat);
