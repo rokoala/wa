@@ -45,7 +45,7 @@ class InputPanel extends Component {
   }
   render() {
     return (
-      <Wrapper>
+      <Wrapper className={this.props.className}>
         <TextField
           autoFocus
           inputRef={this.messageInputRef}

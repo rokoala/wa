@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export default class NoRoom extends Component {
-  render() {
-    return <div>No Room Selected</div>;
-  }
-}
+const NoRoom = () => {
+  return <div>No Room Selected</div>;
+};
+
+export default NoRoom;

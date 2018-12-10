@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import SocketClient from './SocketClient.js';
-import CardMessage from './CardMessage.jsx';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import SocketClient from '../resources/SocketClient';
+import CardMessage from '../components/CardMessage';
 import { addMessage } from '../actions';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Scrollable = styled.div`
   height: 500px;
@@ -49,18 +49,12 @@ class ChatPanel extends Component {
     }, 100);
   }
   render() {
-    const history = this.props.history.map(message => {
-      return (
-        <CardMessage
-          key={message.id}
-          message={message}
-          fromMe={message.fromMe}
-        />
-      );
-    });
+    const history = this.props.history.map(message => (
+      <CardMessage key={message.id} message={message} fromMe={message.fromMe} />
+    ));
 
     return (
-      <Scrollable ref={this.panelRef}>
+      <Scrollable className={this.props.className} ref={this.panelRef}>
         <Content>
           {history}
           <EndMessage />

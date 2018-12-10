@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
 import { appLogin } from '../actions';
 import { connect } from 'react-redux';

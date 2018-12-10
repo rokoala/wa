@@ -22,12 +22,6 @@ class Lobby extends Component {
         ) : (
           <List>
             <ListItem button>
-              <ListItemText primary="Room #1" />
-            </ListItem>
-            <ListItem button>
-              <ListItemText primary="Room #2" />
-            </ListItem>
-            <ListItem button>
               <ListItemIcon>
                 <AddIconLocation />
               </ListItemIcon>
@@ -35,6 +29,12 @@ class Lobby extends Component {
                 onClick={this.onAddRoomClick}
                 primary="Criar Sala"
               />
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary="Room #1" />
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary="Room #2" />
             </ListItem>
           </List>
         )}

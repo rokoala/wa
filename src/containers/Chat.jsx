@@ -9,18 +9,18 @@ import {
   toogleRoomInfo,
   setRoom
 } from '../actions';
-import SocketClient from './SocketClient';
+import SocketClient from '../resources/SocketClient';
 import InputPanel from './InputPanel';
 import ChatPanel from './ChatPanel';
-import ListUserChat from './ListUserChat';
-import NoRoom from './NoRoom';
+import ListUserChat from '../components/ListUserChat';
+import NoRoom from '../components/NoRoom';
 import styled from 'styled-components';
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 0 20px;
+  margin: 20px;
   z-index: 1;
   color: lightgray;
   border-bottom: 1px solid;
@@ -28,12 +28,26 @@ const Header = styled.div`
 
 const ChatWrapper = styled.div`
   height: 100%;
+  flex: 1;
+  display: flex;
+  flex-flow: column;
 `;
 
 const Wrapper = styled.div``;
 
 const Content = styled.div`
   display: flex;
+  height: 100%;
+  flex-flow: column;
+`;
+
+const StyledChat = styled(ChatPanel)`
+  flex: 9;
+  padding: 15px;
+`;
+
+const StyledInputPanel = styled(InputPanel)`
+  flex: 1;
 `;
 
 class Chat extends Component {
@@ -46,6 +60,10 @@ class Chat extends Component {
     this.socketClient.addUser(this.props.username);
 
     this.displayRoomInfo = this.displayRoomInfo.bind(this);
+    this.onCloseRoomInfo = this.onCloseRoomInfo.bind(this);
+  }
+  onCloseRoomInfo() {
+    this.props.toogleRoomInfo();
   }
   displayRoomInfo() {
     if (this.props.room) this.props.toogleRoomInfo();
@@ -55,7 +73,7 @@ class Chat extends Component {
     return (
       <Wrapper className={this.props.className}>
         {this.props.roomInfo ? (
-          <ListUserChat />
+          <ListUserChat onClose={this.onCloseRoomInfo} />
         ) : (
           <Content>
             {this.props.room ? (
@@ -63,13 +81,13 @@ class Chat extends Component {
                 <Header onClick={this.displayRoomInfo}>
                   <Typography variant="h4">{title}</Typography>
                 </Header>
-                <ChatWrapper style={{ flex: '1' }}>
-                  <ChatPanel />
-                  <InputPanel />
+                <ChatWrapper>
+                  <StyledChat />
+                  <StyledInputPanel />
                 </ChatWrapper>
               </React.Fragment>
             ) : (
-              <NoRoom style={{ flex: '1' }} />
+              <NoRoom />
             )}
           </Content>
         )}

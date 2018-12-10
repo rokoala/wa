@@ -1,17 +1,17 @@
+import 'typeface-roboto';
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import 'typeface-roboto';
-import Chat from './components/Chat.jsx';
-import Lobby from './components/Lobby';
-import UserLogin from './components/UserLogin.jsx';
 import { connect } from 'react-redux';
-import Geolocation from './resources/Geolocation';
 import { bindActionCreators } from 'redux';
-import { setLocation } from './actions';
+import Chat from './Chat.jsx';
+import Lobby from '../components/Lobby';
+import UserLogin from './UserLogin';
+import Geolocation from '../resources/Geolocation';
+import { setLocation } from '../actions';
 import styled from 'styled-components';
 
 const StyledLobby = styled(Lobby)`
-  flex: 0 1 400px;
+  flex: 0 1 20%;
   border-right: 1px solid lightgray;
 `;
 

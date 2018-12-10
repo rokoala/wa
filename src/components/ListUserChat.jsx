@@ -31,10 +31,6 @@ class ListUserChat extends Component {
     };
     this.onCloseClick = this.onCloseClick.bind(this);
   }
-  onCloseClick(evt) {
-    evt.preventDefault();
-    this.props.toogleRoomInfo();
-  }
   componentDidMount() {
     this.props.socketClient.onlineUsers().then(users => {
       this.setState({ users });
@@ -46,7 +42,7 @@ class ListUserChat extends Component {
         <Header>
           <CloseIcon
             style={{ cursor: 'pointer' }}
-            onClick={this.onCloseClick}
+            onClick={this.props.onClose}
           />
           <Typography variant="h4">Users Online</Typography>
         </Header>

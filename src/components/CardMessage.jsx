@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
+import styled from 'styled-components';
 
-export default class CardMessage extends Component {
+const StyledCardContent = styled(CardContent)`
+  padding: 12px;
+`;
+
+class CardMessage extends Component {
   constructor(props) {
     super(props);
-
     const cardStyleDefault = {
       minWidth: 5,
       margin: 2
@@ -19,15 +23,18 @@ export default class CardMessage extends Component {
     );
   }
   render() {
+    const { author, text } = this.props.message;
     return (
       <Card style={this.cardStyle}>
-        <CardContent style={{ padding: 12 }}>
-          <Typography style={{ fontWeight: 'bold' }} gutterBottom>
-            {this.props.message.author}
+        <StyledCardContent>
+          <Typography gutterBottom>
+            <b>{author}</b>
           </Typography>
-          <Typography variant="body1">{this.props.message.text}</Typography>
-        </CardContent>
+          <Typography variant="body1">{text}</Typography>
+        </StyledCardContent>
       </Card>
     );
   }
 }
+
+export default CardMessage;

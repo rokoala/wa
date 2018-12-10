@@ -10,7 +10,6 @@ class RoomForm extends Component {
     this.onExitClick = this.onExitClick.bind(this);
   }
   onExitClick() {
-    console.log(this.props);
     this.props.toogleRoomForm();
   }
   render() {
