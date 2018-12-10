@@ -4,7 +4,8 @@ const initialState = {
   username: '',
   chatEnabled: false,
   roomInfo: false,
-  socketClient: null
+  socketClient: null,
+  location: null
 };
 
 export const app = (state = initialState, action) => {
@@ -24,6 +25,11 @@ export const app = (state = initialState, action) => {
       return {
         ...state,
         socketClient: action.socketClient
+      };
+    case appActions.SET_LOCATION:
+      return {
+        ...state,
+        location: action.location
       };
     default:
       return state;

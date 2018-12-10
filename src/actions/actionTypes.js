@@ -1,7 +1,8 @@
 export const appActions = {
   CHAT_LOGIN: 'CHAT_LOGIN',
   TOOGLE_ROOM_INFO: 'TOOGLE_ROOM_INFO',
-  ADD_SOCKET_CLIENT: 'ADD_SOCKET_CLIENT'
+  ADD_SOCKET_CLIENT: 'ADD_SOCKET_CLIENT',
+  SET_LOCATION: 'SET_LOCATION'
 };
 
 export const chatActions = {

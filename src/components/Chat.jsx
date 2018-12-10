@@ -9,6 +9,7 @@ import SocketClient from './SocketClient.js';
 import InputPanel from './InputPanel.jsx';
 import ChatPanel from './ChatPanel.jsx';
 import ListUserChat from './ListUserChat.jsx';
+import Lobby from './Lobby';
 
 const Header = styled.div`
   display: flex;
@@ -19,6 +20,17 @@ const Header = styled.div`
   z-index: 1;
   color: lightgray;
   border-bottom: 1px solid;
+`;
+
+const ChatWrapper = styled.div``;
+
+const Content = styled.div`
+  display: flex;
+`;
+
+const StyledLobby = styled(Lobby)`
+  flex: 0 1 auto;
+  border-right: 1px solid lightgray;
 `;
 
 class Chat extends Component {
@@ -47,8 +59,13 @@ class Chat extends Component {
             <Header onClick={this.displayRoomInfo}>
               <Typography variant="h4">Room</Typography>
             </Header>
-            <ChatPanel />
-            <InputPanel />
+            <Content>
+              <StyledLobby />
+              <ChatWrapper style={{ flex: 1 }}>
+                <ChatPanel />
+                <InputPanel />
+              </ChatWrapper>
+            </Content>
           </React.Fragment>
         )}
       </Paper>

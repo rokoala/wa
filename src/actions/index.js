@@ -18,3 +18,8 @@ export const addSocketClient = socketClient => ({
 export const toogleRoomInfo = () => ({
   type: appActions.TOOGLE_ROOM_INFO
 });
+
+export const setLocation = location => ({
+  type: appActions.SET_LOCATION,
+  location
+});
