@@ -1,9 +1,11 @@
 import { appActions } from '../actions/actionTypes';
 
 const initialState = {
-  username: '',
-  chatEnabled: false,
+  username: 'InitialName',
+  chatEnabled: true,
   roomInfo: false,
+  room: null,
+  showRoomForm: false,
   socketClient: null,
   location: null
 };
@@ -30,6 +32,16 @@ export const app = (state = initialState, action) => {
       return {
         ...state,
         location: action.location
+      };
+    case appActions.SET_ROOM:
+      return {
+        ...state,
+        room: action.room
+      };
+    case appActions.TOOGLE_ROOM_FORM:
+      return {
+        ...state,
+        showRoomForm: !state.showRoomForm
       };
     default:
       return state;

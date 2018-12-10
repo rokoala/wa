@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Paper, Typography } from '@material-ui/core/';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addMessage, addSocketClient, toogleRoomInfo } from '../actions';
+import { connect } from 'react-redux';
+import { Typography } from '@material-ui/core/';
+import {
+  addMessage,
+  addSocketClient,
+  toogleRoomInfo,
+  setRoom
+} from '../actions';
+import SocketClient from './SocketClient';
+import InputPanel from './InputPanel';
+import ChatPanel from './ChatPanel';
+import ListUserChat from './ListUserChat';
+import NoRoom from './NoRoom';
 import styled from 'styled-components';
-import SocketClient from './SocketClient.js';
-import InputPanel from './InputPanel.jsx';
-import ChatPanel from './ChatPanel.jsx';
-import ListUserChat from './ListUserChat.jsx';
-import Lobby from './Lobby';
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   margin: 0 20px;
   z-index: 1;
   color: lightgray;
   border-bottom: 1px solid;
 `;
 
-const ChatWrapper = styled.div``;
+const ChatWrapper = styled.div`
+  height: 100%;
+`;
+
+const Wrapper = styled.div``;
 
 const Content = styled.div`
   display: flex;
-`;
-
-const StyledLobby = styled(Lobby)`
-  flex: 0 1 auto;
-  border-right: 1px solid lightgray;
 `;
 
 class Chat extends Component {
@@ -45,30 +48,32 @@ class Chat extends Component {
     this.displayRoomInfo = this.displayRoomInfo.bind(this);
   }
   displayRoomInfo() {
-    this.props.toogleRoomInfo();
+    if (this.props.room) this.props.toogleRoomInfo();
   }
   render() {
+    const title = this.props.room ? 'Room Name' : 'wa';
     return (
-      <Paper
-        style={{ maxWidth: 600, height: '100%', marginBottom: 40, padding: 20 }}
-      >
+      <Wrapper className={this.props.className}>
         {this.props.roomInfo ? (
           <ListUserChat />
         ) : (
-          <React.Fragment>
-            <Header onClick={this.displayRoomInfo}>
-              <Typography variant="h4">Room</Typography>
-            </Header>
-            <Content>
-              <StyledLobby />
-              <ChatWrapper style={{ flex: 1 }}>
-                <ChatPanel />
-                <InputPanel />
-              </ChatWrapper>
-            </Content>
-          </React.Fragment>
+          <Content>
+            {this.props.room ? (
+              <React.Fragment>
+                <Header onClick={this.displayRoomInfo}>
+                  <Typography variant="h4">{title}</Typography>
+                </Header>
+                <ChatWrapper style={{ flex: '1' }}>
+                  <ChatPanel />
+                  <InputPanel />
+                </ChatWrapper>
+              </React.Fragment>
+            ) : (
+              <NoRoom style={{ flex: '1' }} />
+            )}
+          </Content>
         )}
-      </Paper>
+      </Wrapper>
     );
   }
 }
@@ -79,11 +84,15 @@ Chat.propTypes = {
 
 const mapStateToProps = state => ({
   roomInfo: state.app.roomInfo,
+  room: state.app.room,
   username: state.app.username
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addMessage, toogleRoomInfo, addSocketClient }, dispatch);
+  bindActionCreators(
+    { addMessage, toogleRoomInfo, addSocketClient, setRoom },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

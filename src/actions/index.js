@@ -23,3 +23,12 @@ export const setLocation = location => ({
   type: appActions.SET_LOCATION,
   location
 });
+
+export const setRoom = room => ({
+  type: appActions.SET_ROOM,
+  room
+});
+
+export const toogleRoomForm = () => ({
+  type: appActions.TOOGLE_ROOM_FORM
+});
