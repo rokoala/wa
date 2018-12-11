@@ -8,17 +8,17 @@ import { toogleRoomForm } from '../actions';
 class LobbyContainer extends Component {
   constructor(props) {
     super(props);
-    this.handleAddRoomClick = this.handleAddRoomClick.bind(this);
+    this.handleRoomClick = this.handleRoomClick.bind(this);
   }
-  handleAddRoomClick() {
+  handleRoomClick() {
     this.props.toogleRoomForm();
   }
   render() {
     const showRoomForm = this.props.showRoomForm;
     return showRoomForm ? (
-      <RoomForm />
+      <RoomForm onExitClick={this.handleRoomClick} />
     ) : (
-      <ListRoom onAddRoomClick={this.handleAddRoomClick} />
+      <ListRoom onAddRoomClick={this.handleRoomClick} />
     );
   }
 }

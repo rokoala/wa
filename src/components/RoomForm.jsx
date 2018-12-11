@@ -1,31 +1,17 @@
-import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { toogleRoomForm } from '../actions';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-class RoomForm extends Component {
-  constructor(props) {
-    super(props);
+const RoomForm = props => {
+  return (
+    <div>
+      Criar Chat
+      <button onClick={props.onExitClick}>Voltar</button>
+    </div>
+  );
+};
 
-    this.onExitClick = this.onExitClick.bind(this);
-  }
-  onExitClick() {
-    this.props.toogleRoomForm();
-  }
-  render() {
-    return (
-      <div>
-        Criar Chat
-        <button onClick={this.onExitClick}>Voltar</button>
-      </div>
-    );
-  }
-}
+RoomForm.propTypes = {
+  onExitClick: PropTypes.func
+};
 
-const mapDispathToProps = dispatch =>
-  bindActionCreators({ toogleRoomForm }, dispatch);
-
-export default connect(
-  null,
-  mapDispathToProps
-)(RoomForm);
+export default RoomForm;
