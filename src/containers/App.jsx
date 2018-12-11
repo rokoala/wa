@@ -4,13 +4,13 @@ import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './Chat.jsx';
-import Lobby from '../components/Lobby';
+import LobbyContainer from './LobbyContainer';
 import UserLogin from './UserLogin';
 import Geolocation from '../resources/Geolocation';
 import { setLocation } from '../actions';
 import styled from 'styled-components';
 
-const StyledLobby = styled(Lobby)`
+const StyledLobbyContainer = styled(LobbyContainer)`
   flex: 0 1 20%;
   border-right: 1px solid lightgray;
 `;
@@ -42,7 +42,7 @@ class App extends Component {
     const { chatEnabled, location } = this.props;
     return chatEnabled && location ? (
       <AppWrapper>
-        <StyledLobby />
+        <StyledLobbyContainer />
         <StyledChat socketAdress="http://localhost:8000" />
       </AppWrapper>
     ) : (
