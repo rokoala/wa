@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Chat from './Chat.jsx';
+import ChatManagerContainer from './ChatManagerContainer';
 import LobbyContainer from './LobbyContainer';
 import UserLogin from './UserLogin';
 import Geolocation from '../resources/Geolocation';
@@ -21,7 +21,7 @@ const AppWrapper = styled.div`
   height: 100%;
 `;
 
-const StyledChat = styled(Chat)`
+const StyledChat = styled(ChatManagerContainer)`
   flex: 1;
 `;
 

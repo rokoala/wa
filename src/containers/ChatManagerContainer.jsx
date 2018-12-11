@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Typography } from '@material-ui/core/';
 import {
   addMessage,
   addSocketClient,
@@ -10,28 +9,10 @@ import {
   setRoom
 } from '../actions';
 import SocketClient from '../resources/SocketClient';
-import InputPanel from './InputPanel';
-import ChatPanel from './ChatPanel';
 import ListUserChatContainer from './ListUserChatContainer';
 import NoRoom from '../components/NoRoom';
 import styled from 'styled-components';
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 20px;
-  z-index: 1;
-  color: lightgray;
-  border-bottom: 1px solid;
-`;
-
-const ChatWrapper = styled.div`
-  height: 100%;
-  flex: 1;
-  display: flex;
-  flex-flow: column;
-`;
+import Chat from '../components/Chat';
 
 const Wrapper = styled.div``;
 
@@ -41,16 +22,7 @@ const Content = styled.div`
   flex-flow: column;
 `;
 
-const StyledChat = styled(ChatPanel)`
-  flex: 9;
-  padding: 15px;
-`;
-
-const StyledInputPanel = styled(InputPanel)`
-  flex: 1;
-`;
-
-class Chat extends Component {
+class ChatManagerContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -59,14 +31,14 @@ class Chat extends Component {
 
     this.socketClient.addUser(this.props.username);
 
-    this.displayRoomInfo = this.displayRoomInfo.bind(this);
     this.onCloseRoomInfo = this.onCloseRoomInfo.bind(this);
+    this.handleHeaderChatClick = this.handleHeaderChatClick.bind(this);
   }
   onCloseRoomInfo() {
     this.props.toogleRoomInfo();
   }
-  displayRoomInfo() {
-    if (this.props.room) this.props.toogleRoomInfo();
+  handleHeaderChatClick() {
+    this.props.toogleRoomInfo();
   }
   render() {
     const title = this.props.room ? 'Room Name' : 'wa';
@@ -77,15 +49,7 @@ class Chat extends Component {
         ) : (
           <Content>
             {this.props.room ? (
-              <React.Fragment>
-                <Header onClick={this.displayRoomInfo}>
-                  <Typography variant="h4">{title}</Typography>
-                </Header>
-                <ChatWrapper>
-                  <StyledChat />
-                  <StyledInputPanel />
-                </ChatWrapper>
-              </React.Fragment>
+              <Chat title={title} onHeaderClick={this.handleHeaderChatClick} />
             ) : (
               <NoRoom />
             )}
@@ -96,7 +60,7 @@ class Chat extends Component {
   }
 }
 
-Chat.propTypes = {
+ChatManagerContainer.propTypes = {
   socketAdress: PropTypes.string.isRequired
 };
 
@@ -115,4 +79,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Chat);
+)(ChatManagerContainer);

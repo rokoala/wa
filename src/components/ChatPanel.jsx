@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SocketClient from '../resources/SocketClient';
-import CardMessage from '../components/CardMessage';
+import CardMessage from './CardMessage';
 import { addMessage } from '../actions';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
