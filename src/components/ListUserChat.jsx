@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import UserIcon from '@material-ui/icons/AccountCircleTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { toogleRoomInfo } from '../actions';
 import {
+  Button,
   List,
   ListItem,
   ListItemIcon,
@@ -23,52 +22,35 @@ const Header = styled.div`
   border-bottom: 1px solid;
 `;
 
-class ListUserChat extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      users: []
-    };
-    this.onCloseClick = this.onCloseClick.bind(this);
-  }
-  componentDidMount() {
-    this.props.socketClient.onlineUsers().then(users => {
-      this.setState({ users });
-    });
-  }
-  render() {
-    return (
-      <React.Fragment>
-        <Header>
-          <CloseIcon
-            style={{ cursor: 'pointer' }}
-            onClick={this.props.onClose}
-          />
-          <Typography variant="h4">Users Online</Typography>
-        </Header>
-        <List>
-          {this.state.users.map(user => (
-            <ListItem key={user.id}>
-              <ListItemIcon>
-                <UserIcon style={{ fontSize: 60 }} />
-              </ListItemIcon>
-              <ListItemText inset primary={user.username} />
-            </ListItem>
-          ))}
-        </List>
-      </React.Fragment>
-    );
-  }
-}
+const ListUserChat = props => {
+  return (
+    <React.Fragment>
+      <Header>
+        <Button onClick={props.onClose}>
+          <CloseIcon />
+        </Button>
+        <Typography variant="h4">Usuários Online</Typography>
+      </Header>
+      <List>
+        {props.users.map(user => (
+          <ListItem key={user.id}>
+            <ListItemIcon>
+              <UserIcon style={{ fontSize: 50 }} />
+            </ListItemIcon>
+            <ListItemText inset primary={user.username} />
+          </ListItem>
+        ))}
+      </List>
+    </React.Fragment>
+  );
+};
 
-const mapStateToProps = state => ({
-  socketClient: state.app.socketClient
-});
+ListUserChat.propTypes = {
+  onClose: PropTypes.func,
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    username: PropTypes.string
+  })
+};
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toogleRoomInfo }, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ListUserChat);
+export default ListUserChat;

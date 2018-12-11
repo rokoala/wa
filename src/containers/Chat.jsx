@@ -12,7 +12,7 @@ import {
 import SocketClient from '../resources/SocketClient';
 import InputPanel from './InputPanel';
 import ChatPanel from './ChatPanel';
-import ListUserChat from '../components/ListUserChat';
+import ListUserChatContainer from './ListUserChatContainer';
 import NoRoom from '../components/NoRoom';
 import styled from 'styled-components';
 
@@ -73,7 +73,7 @@ class Chat extends Component {
     return (
       <Wrapper className={this.props.className}>
         {this.props.roomInfo ? (
-          <ListUserChat onClose={this.onCloseRoomInfo} />
+          <ListUserChatContainer onClose={this.onCloseRoomInfo} />
         ) : (
           <Content>
             {this.props.room ? (
