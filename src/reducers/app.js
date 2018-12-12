@@ -1,7 +1,7 @@
 import { appActions } from '../actions/actionTypes';
 
 const initialState = {
-  username: '',
+  username: 'Test',
   chatEnabled: true,
   roomInfo: false,
   room: 'aa',
