@@ -4,10 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import styled from 'styled-components';
 
-const StyledCardContent = styled(CardContent)`
-  padding: 12px;
-`;
-
 class CardMessage extends Component {
   constructor(props) {
     super(props);
@@ -26,12 +22,12 @@ class CardMessage extends Component {
     const { author, text } = this.props.message;
     return (
       <Card style={this.cardStyle}>
-        <StyledCardContent>
+        <CardContent style={{ padding: 12 }}>
           <Typography gutterBottom>
             <b>{author}</b>
           </Typography>
           <Typography variant="body1">{text}</Typography>
-        </StyledCardContent>
+        </CardContent>
       </Card>
     );
   }
