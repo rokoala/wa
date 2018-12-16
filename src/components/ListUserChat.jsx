@@ -16,7 +16,8 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 35px 20px;
+  background-color: #6cc7ae;
+  padding: 9px 30px;
   z-index: 1;
   color: lightgray;
   border-bottom: 1px solid;
@@ -29,7 +30,9 @@ const ListUserChat = props => {
         <Button onClick={props.onClose}>
           <CloseIcon />
         </Button>
-        <Typography variant="h4">Usuários Online</Typography>
+        <Typography style={{ color: 'white', fontWeight: 300 }} variant="h5">
+          Usuários Online
+        </Typography>
       </Header>
       <List>
         {props.users.map(user => (

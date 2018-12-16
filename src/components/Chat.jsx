@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import InputPanel from './InputPanel';
 import ChatPanel from './ChatPanel';
-import { Typography } from '@material-ui/core/';
+import { Typography, withTheme } from '@material-ui/core/';
 
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 35px 20px;
+  background-color: #6cc7ae;
+  padding: 13px 30px;
   z-index: 1;
   color: lightgray;
   border-bottom: 1px solid;
@@ -35,7 +36,12 @@ const Chat = props => {
   return (
     <React.Fragment>
       <Header onClick={props.onHeaderClick}>
-        <Typography variant="h4">{props.title}</Typography>
+        <Typography
+          style={{ color: 'white', fontWeight: 'lighter' }}
+          variant="h5"
+        >
+          {props.title}
+        </Typography>
       </Header>
       <ChatWrapper>
         <StyledChatPanel />

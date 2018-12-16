@@ -8,6 +8,10 @@ import { withStyles } from '@material-ui/core/styles';
 const Header = styled.div`
   display: flex;
   align-items: center;
+  padding: 8px;
+  background-color: white;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  letter-spacing: 2px;
 `;
 
 const InputWrapper = styled.div`
@@ -29,10 +33,20 @@ const RoomForm = props => {
   return (
     <FormControl style={{ width: '100%', height: '100%' }}>
       <Header>
-        <Button onClick={props.onExitClick} className={classes.button}>
+        <Button onClick={props.onExitClick}>
           <ArrowBack />
         </Button>
-        <Typography variant="h5">Criar Chat</Typography>
+        <Typography
+          style={{
+            fontWeight: 'lighter',
+            width: '100%',
+            textAlign: 'center',
+            marginLeft: '-23px'
+          }}
+          variant="h5"
+        >
+          Criar Chat
+        </Typography>
       </Header>
       <InputWrapper>
         <TextField

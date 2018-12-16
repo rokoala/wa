@@ -11,11 +11,17 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 import Divider from '@material-ui/core/Divider';
-import { lightGreen } from '@material-ui/core/colors';
 
 const StyledListItem = withStyles({
   primary: {
     'font-weight': 500
+  }
+})(ListItemText);
+
+const ListItemChat = withStyles({
+  primary: {
+    'font-weight': 300,
+    'letter-spacing': '1px'
   }
 })(ListItemText);
 
@@ -24,14 +30,14 @@ const ListRoom = props => {
     <React.Fragment>
       <List style={{ padding: 0 }}>
         <ListItem
-          style={{ backgroundColor: '' }}
+          style={{ backgroundColor: 'white' }}
           onClick={props.onAddRoomClick}
           button
         >
           <ListItemIcon>
             <ChatBubbleOutline fontSize="large" />
           </ListItemIcon>
-          <ListItemText primary="Criar Chat" />
+          <ListItemChat primary="Criar Chat" />
         </ListItem>
       </List>
       <Divider />
