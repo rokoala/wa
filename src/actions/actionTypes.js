@@ -10,3 +10,8 @@ export const appActions = {
 export const chatActions = {
   ADD_MESSAGE: 'ADD_MESSAGE'
 };
+
+export const roomActions = {
+  ADD_ROOM: 'ADD_ROOM',
+  LOAD_ROOMS_BY_LOCATION: 'LOAD_ROOMS_BY_LOCATION'
+};

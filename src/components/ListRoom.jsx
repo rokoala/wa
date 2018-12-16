@@ -26,12 +26,13 @@ const ListItemChat = withStyles({
 })(ListItemText);
 
 const ListRoom = props => {
+  const { rooms } = props;
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
         <ListItem
           style={{ backgroundColor: 'white' }}
-          onClick={props.onAddRoomClick}
+          onClick={props.onAddRoomItemClick}
           button
         >
           <ListItemIcon>
@@ -42,15 +43,19 @@ const ListRoom = props => {
       </List>
       <Divider />
       <List>
-        <ListItem button>
-          {/* <ListItemAvatar>
+        {rooms.map(room => {
+          return (
+            <ListItem key={room.id} button>
+              {/* <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar> */}
-          <StyledListItem primary="Pizzaria Rei Jorge" secondary="Olá!" />
-        </ListItem>
-        <ListItem button>
-          <StyledListItem primary="Shopping Ipiranga" secondary="Ok!" />
-        </ListItem>
+              <StyledListItem
+                primary={room.name}
+                secondary={room.lastMessage}
+              />
+            </ListItem>
+          );
+        })}
       </List>
     </React.Fragment>
   );

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Typography, FormControl, TextField, Button } from '@material-ui/core';
 import styled from 'styled-components';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import { withStyles } from '@material-ui/core/styles';
+import GeoLocation from '../resources/Geolocation';
 
 const Header = styled.div`
   display: flex;
@@ -28,45 +29,72 @@ const styles = theme => ({
   }
 });
 
-const RoomForm = props => {
-  const { classes } = props;
-  return (
-    <FormControl style={{ width: '100%', height: '100%' }}>
-      <Header>
-        <Button onClick={props.onExitClick}>
-          <ArrowBack />
-        </Button>
-        <Typography
-          style={{
-            fontWeight: 'lighter',
-            width: '100%',
-            textAlign: 'center',
-            marginLeft: '-23px'
-          }}
-          variant="h5"
-        >
-          Criar Chat
-        </Typography>
-      </Header>
-      <InputWrapper>
-        <TextField
-          style={{ margin: 15, width: '70%' }}
-          label="Nome"
-          autoFocus={true}
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          size="small"
-          onClick={props.onAddRoomClick}
-          className={classes.button}
-        >
-          Criar
-        </Button>
-      </InputWrapper>
-    </FormControl>
-  );
-};
+class RoomForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: ''
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.onAddBtnClick = this.onAddBtnClick.bind(this);
+  }
+  handleChange(event) {
+    this.setState({ name: event.target.value });
+  }
+  onAddBtnClick(event) {
+    GeoLocation.getLocation().then(pos => {
+      this.props.onAddRoomClick({
+        name: this.state.name,
+        location: {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        }
+      });
+    });
+  }
+  render() {
+    const { classes, onExitClick } = this.props;
+    return (
+      <FormControl style={{ width: '100%', height: '100%' }}>
+        <Header>
+          <Button onClick={onExitClick}>
+            <ArrowBack />
+          </Button>
+          <Typography
+            style={{
+              fontWeight: 'lighter',
+              width: '100%',
+              textAlign: 'center',
+              marginLeft: '-23px'
+            }}
+            variant="h5"
+          >
+            Criar Chat
+          </Typography>
+        </Header>
+        <InputWrapper>
+          <TextField
+            onChange={this.handleChange}
+            value={this.state.name}
+            style={{ margin: 15, width: '70%' }}
+            label="Nome"
+            autoFocus={true}
+          />
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={this.onAddBtnClick}
+            className={classes.button}
+          >
+            Criar
+          </Button>
+        </InputWrapper>
+      </FormControl>
+    );
+  }
+}
 
 RoomForm.propTypes = {
   onExitClick: PropTypes.func

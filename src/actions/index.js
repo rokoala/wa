@@ -1,4 +1,5 @@
-import { appActions, chatActions } from './actionTypes';
+import { appActions, chatActions, roomActions } from './actionTypes';
+import { uid } from 'react-uid';
 
 export const appLogin = username => ({
   type: appActions.CHAT_LOGIN,
@@ -32,3 +33,19 @@ export const setRoom = room => ({
 export const toogleRoomForm = () => ({
   type: appActions.TOOGLE_ROOM_FORM
 });
+
+export const addRoom = _room => {
+  const room = {
+    id: uid(_room), //TODO: Get the id from database
+    history: [],
+    lastMessage: '',
+    name: _room.name,
+    location: _room.location
+  };
+
+  console.log(room);
+  return {
+    type: roomActions.ADD_ROOM,
+    room
+  };
+};
