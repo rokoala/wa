@@ -26,7 +26,8 @@ const ListItemChat = withStyles({
 })(ListItemText);
 
 const ListRoom = props => {
-  const { rooms } = props;
+  const { rooms, onItemClick } = props;
+
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
@@ -50,6 +51,9 @@ const ListRoom = props => {
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar> */}
               <StyledListItem
+                onClick={() => {
+                  props.onItemClick(room);
+                }}
                 primary={room.name}
                 secondary={room.lastMessage}
               />

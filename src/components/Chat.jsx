@@ -33,6 +33,7 @@ const StyledInputPanel = styled(InputPanel)`
 `;
 
 const Chat = props => {
+  const { name } = props.room;
   return (
     <React.Fragment>
       <Header onClick={props.onHeaderClick}>
@@ -40,7 +41,7 @@ const Chat = props => {
           style={{ color: 'white', fontWeight: 'lighter' }}
           variant="h5"
         >
-          {props.title}
+          {name}
         </Typography>
       </Header>
       <ChatWrapper>

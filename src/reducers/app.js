@@ -4,7 +4,7 @@ const initialState = {
   username: 'Test',
   chatEnabled: true,
   roomInfo: false,
-  room: 'Teste',
+  room: null,
   showRoomForm: false,
   socketClient: null,
   location: null

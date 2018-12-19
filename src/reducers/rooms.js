@@ -4,25 +4,11 @@ const initialState = [
   {
     id: 1,
     name: 'Pizzaria Rei Jorge',
-    history: [
-      {
-        message: 'Olá',
-        author: 'Roberto',
-        timestamp: null
-      }
-    ],
     lastMessage: 'Olá'
   },
   {
     id: 2,
     name: 'Shopping Ipiranga',
-    history: [
-      {
-        message: 'Ok!',
-        author: 'Carla',
-        timestamp: null
-      }
-    ],
     lastMessage: 'Ok!'
   }
 ];

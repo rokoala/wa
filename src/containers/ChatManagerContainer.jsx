@@ -41,7 +41,6 @@ class ChatManagerContainer extends Component {
     this.props.toogleRoomInfo();
   }
   render() {
-    const title = this.props.room ? 'Room Name' : 'wa';
     return (
       <Wrapper className={this.props.className}>
         {this.props.roomInfo ? (
@@ -49,7 +48,10 @@ class ChatManagerContainer extends Component {
         ) : (
           <Content>
             {this.props.room ? (
-              <Chat title={title} onHeaderClick={this.handleHeaderChatClick} />
+              <Chat
+                room={this.props.room}
+                onHeaderClick={this.handleHeaderChatClick}
+              />
             ) : (
               <NoRoom />
             )}

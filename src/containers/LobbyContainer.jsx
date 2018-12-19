@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RoomForm from '../components/RoomForm';
 import ListRoom from '../components/ListRoom';
-import { toogleRoomForm, addRoom } from '../actions';
+import { toogleRoomForm, addRoom, setRoom } from '../actions';
 import styled from 'styled-components';
 
 const Lobby = styled.div`
@@ -15,6 +15,7 @@ class LobbyContainer extends Component {
     super(props);
     this.handleItemRoomClick = this.handleItemRoomClick.bind(this);
     this.handleAddRoomClick = this.handleAddRoomClick.bind(this);
+    this.handleItemJoinRoom = this.handleItemJoinRoom.bind(this);
   }
   handleItemRoomClick() {
     this.props.toogleRoomForm();
@@ -22,6 +23,9 @@ class LobbyContainer extends Component {
   handleAddRoomClick(room) {
     this.props.addRoom(room);
     this.props.toogleRoomForm();
+  }
+  handleItemJoinRoom(room) {
+    this.props.setRoom(room);
   }
   render() {
     const { showRoomForm, rooms } = this.props;
@@ -36,6 +40,7 @@ class LobbyContainer extends Component {
           <ListRoom
             rooms={rooms}
             onAddRoomItemClick={this.handleItemRoomClick}
+            onItemClick={this.handleItemJoinRoom}
           />
         )}
       </Lobby>
@@ -49,7 +54,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toogleRoomForm, addRoom }, dispatch);
+  bindActionCreators({ toogleRoomForm, addRoom, setRoom }, dispatch);
 
 export default connect(
   mapStateToProps,
