@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import SocketClient from '../resources/SocketClient';
 import CardMessage from './CardMessage';
-import { addMessage } from '../actions';
+import { addMessage, fetchChatMessages } from '../actions';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
@@ -32,6 +32,7 @@ class ChatPanel extends Component {
   }
   componentDidMount() {
     this.props.socketClient.registerMessageHandler(this.onMessageReceived);
+    this.props.fetchChatMessages();
     this.scrollChatToBottom();
   }
   componentDidUpdate() {
@@ -49,6 +50,7 @@ class ChatPanel extends Component {
     }, 100);
   }
   render() {
+    console.log(this.props.history);
     const history = this.props.history.map(message => (
       <CardMessage key={message.id} message={message} fromMe={message.fromMe} />
     ));
@@ -74,7 +76,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addMessage }, dispatch);
+  bindActionCreators({ addMessage, fetchChatMessages }, dispatch);
 
 export default connect(
   mapStateToProps,

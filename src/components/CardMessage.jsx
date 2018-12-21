@@ -19,12 +19,12 @@ class CardMessage extends Component {
     );
   }
   render() {
-    const { author, text } = this.props.message;
+    const { from, text } = this.props.message;
     return (
       <Card style={this.cardStyle}>
         <CardContent style={{ padding: 12 }}>
           <Typography gutterBottom>
-            <b>{author}</b>
+            <b>{from}</b>
           </Typography>
           <Typography variant="body1">{text}</Typography>
         </CardContent>

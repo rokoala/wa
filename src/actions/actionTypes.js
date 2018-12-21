@@ -8,7 +8,8 @@ export const appActions = {
 };
 
 export const chatActions = {
-  ADD_MESSAGE: 'ADD_MESSAGE'
+  ADD_MESSAGE: 'ADD_MESSAGE',
+  RECEIVE_CHAT_MESSAGES: 'RECEIVE_CHAT_MESSAGES'
 };
 
 export const roomActions = {

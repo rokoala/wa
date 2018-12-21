@@ -51,9 +51,9 @@ export const addRoom = _room => {
   };
 };
 
-const receiveChatMessages = response => ({
-  type: 'RECEIVE_CHAT_MESSAGES',
-  response
+const receiveChatMessages = messages => ({
+  type: chatActions.RECEIVE_CHAT_MESSAGES,
+  messages
 });
 
 export const fetchChatMessages = () =>
