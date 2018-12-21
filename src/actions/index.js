@@ -1,5 +1,6 @@
 import { appActions, chatActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
+import * as api from './api';
 
 export const appLogin = username => ({
   type: appActions.CHAT_LOGIN,
@@ -49,3 +50,11 @@ export const addRoom = _room => {
     room
   };
 };
+
+const receiveChatMessages = response => ({
+  type: 'RECEIVE_CHAT_MESSAGES',
+  response
+});
+
+export const fetchChatMessages = () =>
+  api.fetchChatMessages().then(response => receiveChatMessages(response));

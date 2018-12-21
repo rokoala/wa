@@ -1,10 +1,6 @@
 import { chatActions } from '../actions/actionTypes';
 
-const initalState = {
-  history: []
-};
-
-export const chat = (state = initalState, action) => {
+export const chat = (state = {}, action) => {
   switch (action.type) {
     case chatActions.ADD_MESSAGE:
       return {

@@ -1,16 +1,6 @@
 import { appActions } from '../actions/actionTypes';
 
-const initialState = {
-  username: 'Test',
-  chatEnabled: true,
-  roomInfo: false,
-  room: null,
-  showRoomForm: false,
-  socketClient: null,
-  location: null
-};
-
-export const app = (state = initialState, action) => {
+export const app = (state = {}, action) => {
   switch (action.type) {
     case appActions.CHAT_LOGIN:
       return {
