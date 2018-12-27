@@ -1,3 +1,5 @@
+import { Store } from '../../store';
+
 const messages = [
   {
     id: 1,
@@ -28,5 +30,16 @@ export const fetchChatMessages = () => {
     setTimeout(() => {
       resolve(messages);
     }, 500);
+  });
+};
+
+//TODO: Use location as paramater
+export const fetchRoomsByLocation = location => {
+  const { socketClient } = Store.getState().app;
+  return new Promise((resolve, reject) => {
+    socketClient.emit('getRooms', location, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
   });
 };

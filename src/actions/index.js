@@ -1,6 +1,7 @@
 import { appActions, chatActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
 import * as api from './api';
+import { app } from '../reducers/app';
 
 export const appLogin = username => ({
   type: appActions.CHAT_LOGIN,
@@ -12,8 +13,8 @@ export const addMessage = message => ({
   message
 });
 
-export const addSocketClient = socketClient => ({
-  type: appActions.ADD_SOCKET_CLIENT,
+export const setSocketClient = socketClient => ({
+  type: appActions.SET_SOCKET_CLIENT,
   socketClient
 });
 
@@ -44,7 +45,6 @@ export const addRoom = _room => {
     location: _room.location
   };
 
-  console.log(room);
   return {
     type: roomActions.ADD_ROOM,
     room
@@ -58,3 +58,11 @@ const receiveChatMessages = messages => ({
 
 export const fetchChatMessages = () =>
   api.fetchChatMessages().then(response => receiveChatMessages(response));
+
+const receiveRooms = rooms => ({
+  type: roomActions.LOAD_ROOMS_BY_LOCATION,
+  rooms
+});
+
+export const getRoomsByLocation = location =>
+  api.fetchRoomsByLocation(location).then(response => receiveRooms(response));

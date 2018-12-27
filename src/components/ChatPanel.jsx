@@ -32,7 +32,7 @@ class ChatPanel extends Component {
   }
   componentDidMount() {
     this.props.socketClient.registerMessageHandler(this.onMessageReceived);
-    this.props.fetchChatMessages();
+    // this.props.fetchChatMessages();
     this.scrollChatToBottom();
   }
   componentDidUpdate() {

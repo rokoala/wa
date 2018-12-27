@@ -52,7 +52,7 @@ const ListRoom = props => {
           </ListItemAvatar> */}
               <StyledListItem
                 onClick={() => {
-                  props.onItemClick(room);
+                  onItemClick(room);
                 }}
                 primary={room.name}
                 secondary={room.lastMessage}

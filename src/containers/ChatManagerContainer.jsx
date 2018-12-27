@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import {
-  addMessage,
-  addSocketClient,
-  toogleRoomInfo,
-  setRoom
-} from '../actions';
-import SocketClient from '../resources/SocketClient';
+import { addMessage, toogleRoomInfo, setRoom } from '../actions';
 import ListUserChatContainer from './ListUserChatContainer';
 import NoRoom from '../components/NoRoom';
 import styled from 'styled-components';
@@ -25,11 +18,6 @@ const Content = styled.div`
 class ChatManagerContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.socketClient = new SocketClient(props.socketAdress);
-    this.props.addSocketClient(this.socketClient);
-
-    this.socketClient.addUser(this.props.username);
 
     this.onCloseRoomInfo = this.onCloseRoomInfo.bind(this);
     this.handleHeaderChatClick = this.handleHeaderChatClick.bind(this);
@@ -62,10 +50,6 @@ class ChatManagerContainer extends Component {
   }
 }
 
-ChatManagerContainer.propTypes = {
-  socketAdress: PropTypes.string.isRequired
-};
-
 const mapStateToProps = state => ({
   roomInfo: state.app.roomInfo,
   room: state.app.room,
@@ -73,10 +57,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { addMessage, toogleRoomInfo, addSocketClient, setRoom },
-    dispatch
-  );
+  bindActionCreators({ addMessage, toogleRoomInfo, setRoom }, dispatch);
 
 export default connect(
   mapStateToProps,

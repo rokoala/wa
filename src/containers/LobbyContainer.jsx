@@ -3,7 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RoomForm from '../components/RoomForm';
 import ListRoom from '../components/ListRoom';
-import { toogleRoomForm, addRoom, setRoom } from '../actions';
+import {
+  toogleRoomForm,
+  addRoom,
+  setRoom,
+  getRoomsByLocation
+} from '../actions';
 import styled from 'styled-components';
 
 const Lobby = styled.div`
@@ -16,6 +21,12 @@ class LobbyContainer extends Component {
     this.handleItemRoomClick = this.handleItemRoomClick.bind(this);
     this.handleAddRoomClick = this.handleAddRoomClick.bind(this);
     this.handleItemJoinRoom = this.handleItemJoinRoom.bind(this);
+  }
+  componentWillMount() {
+    this.props.getRoomsByLocation();
+  }
+  componentWillUpdate() {
+    this.props.getRoomsByLocation();
   }
   handleItemRoomClick() {
     this.props.toogleRoomForm();
@@ -54,7 +65,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toogleRoomForm, addRoom, setRoom }, dispatch);
+  bindActionCreators(
+    { toogleRoomForm, addRoom, setRoom, getRoomsByLocation },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import InputPanel from './InputPanel';
 import ChatPanel from './ChatPanel';
-import { Typography, withTheme } from '@material-ui/core/';
+import { Typography } from '@material-ui/core/';
 
 const Header = styled.div`
   display: flex;

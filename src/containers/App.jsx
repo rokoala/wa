@@ -7,7 +7,8 @@ import ChatManagerContainer from './ChatManagerContainer';
 import LobbyContainer from './LobbyContainer';
 import UserLogin from './UserLogin';
 import Geolocation from '../resources/Geolocation';
-import { setLocation } from '../actions';
+import { setLocation, setSocketClient } from '../actions';
+import SocketClient from 'socket.io-client';
 import styled from 'styled-components';
 
 const StyledLobbyContainer = styled(LobbyContainer)`
@@ -38,12 +39,16 @@ class App extends Component {
       }
     );
   }
+  componentWillMount() {
+    const { setSocketClient } = this.props;
+    setSocketClient(new SocketClient('http://localhost:8000'));
+  }
   render() {
     const { chatEnabled, location } = this.props;
     return chatEnabled && location ? (
       <AppWrapper>
         <StyledLobbyContainer />
-        <StyledChat socketAdress="http://localhost:8000" />
+        <StyledChat />
       </AppWrapper>
     ) : (
       <UserLogin />
@@ -57,7 +62,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setLocation }, dispatch);
+  bindActionCreators({ setLocation, setSocketClient }, dispatch);
 
 export default connect(
   mapStateToProps,

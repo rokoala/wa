@@ -13,7 +13,7 @@ export const app = (state = {}, action) => {
         ...state,
         roomInfo: !state.roomInfo
       };
-    case appActions.ADD_SOCKET_CLIENT:
+    case appActions.SET_SOCKET_CLIENT:
       return {
         ...state,
         socketClient: action.socketClient

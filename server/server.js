@@ -3,6 +3,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const chatManager = require('./chatManager.js');
 const ClientManager = require('./ClientManager');
+const RoomManager = require('./RoomManager');
 const app = express();
 
 // server port
@@ -21,13 +22,25 @@ const clientManager = ClientManager();
 
 io.on('connection', socket => {
   socket.on('socket:addUser', username => {
-    socket.join('mainroom');
     clientManager.registerClient(socket, { username });
-    socket.broadcast.to('mainroom').emit('socket:addUser', { username });
+  });
+
+  socket.on('socket:joinRoom', (roomId = 'mainroom') => {
+    const _roomId = roomId.toString();
+    socket.join(_roomId, () => {
+      socket.broadcast.to(_roomId).emit('socket:addUser', { username });
+    });
+  });
+
+  socket.on('addRoom', room => {});
+
+  socket.on('getRooms', (location, cb) => {
+    cb(null, RoomManager.getRoomsByLocation(location));
   });
 
   socket.on('addmessage', message => {
-    room.addMessage(message);
+    //room.addMessage(message);
+
     socket.broadcast.to('mainroom').emit('message', message);
   });
 

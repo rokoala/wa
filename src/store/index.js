@@ -14,18 +14,7 @@ const persistedState = {
     socketClient: null,
     location: null
   },
-  rooms: [
-    {
-      id: 1,
-      name: 'Pizzaria Rei Jorge',
-      lastMessage: 'Olá'
-    },
-    {
-      id: 2,
-      name: 'Shopping Ipiranga',
-      lastMessage: 'Ok!'
-    }
-  ],
+  rooms: [],
   chat: {
     history: []
   }
