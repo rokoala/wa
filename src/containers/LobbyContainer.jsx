@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import RoomForm from '../components/RoomForm';
+import RoomFormContainer from './RoomFormContainer';
 import ListRoom from '../components/ListRoom';
 import {
   toogleRoomForm,
@@ -19,20 +19,12 @@ class LobbyContainer extends Component {
   constructor(props) {
     super(props);
     this.handleItemRoomClick = this.handleItemRoomClick.bind(this);
-    this.handleAddRoomClick = this.handleAddRoomClick.bind(this);
     this.handleItemJoinRoom = this.handleItemJoinRoom.bind(this);
   }
   componentWillMount() {
     this.props.getRoomsByLocation();
   }
-  componentWillUpdate() {
-    this.props.getRoomsByLocation();
-  }
   handleItemRoomClick() {
-    this.props.toogleRoomForm();
-  }
-  handleAddRoomClick(room) {
-    this.props.addRoom(room);
     this.props.toogleRoomForm();
   }
   handleItemJoinRoom(room) {
@@ -43,10 +35,7 @@ class LobbyContainer extends Component {
     return (
       <Lobby className={this.props.className}>
         {showRoomForm ? (
-          <RoomForm
-            onExitClick={this.handleItemRoomClick}
-            onAddRoomClick={this.handleAddRoomClick}
-          />
+          <RoomFormContainer />
         ) : (
           <ListRoom
             rooms={rooms}
@@ -65,10 +54,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    { toogleRoomForm, addRoom, setRoom, getRoomsByLocation },
-    dispatch
-  );
+  bindActionCreators({ toogleRoomForm, setRoom, getRoomsByLocation }, dispatch);
 
 export default connect(
   mapStateToProps,

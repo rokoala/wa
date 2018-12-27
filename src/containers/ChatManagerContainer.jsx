@@ -5,7 +5,7 @@ import { addMessage, toogleRoomInfo, setRoom } from '../actions';
 import ListUserChatContainer from './ListUserChatContainer';
 import NoRoom from '../components/NoRoom';
 import styled from 'styled-components';
-import Chat from '../components/Chat';
+import ChatContainer from './ChatContainer';
 
 const Wrapper = styled.div``;
 
@@ -36,7 +36,7 @@ class ChatManagerContainer extends Component {
         ) : (
           <Content>
             {this.props.room ? (
-              <Chat
+              <ChatContainer
                 room={this.props.room}
                 onHeaderClick={this.handleHeaderChatClick}
               />

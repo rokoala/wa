@@ -1,28 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import SocketClient from '../resources/SocketClient';
-import CardMessage from './CardMessage';
 import { addMessage, fetchChatMessages } from '../actions';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import ChatPanel from '../components/ChatPanel';
 
-const Scrollable = styled.div`
-  height: 500px;
-  overflow-y: auto;
-`;
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const EndMessage = styled.div`
-  float:left
-  clear:'both'
-`;
-
-class ChatPanel extends Component {
+class ChatPanelContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -31,7 +13,8 @@ class ChatPanel extends Component {
     this.onMessageReceived = this.onMessageReceived.bind(this);
   }
   componentDidMount() {
-    this.props.socketClient.registerMessageHandler(this.onMessageReceived);
+    this.props.socketClient.on('message', this.onMessageReceived);
+
     // this.props.fetchChatMessages();
     this.scrollChatToBottom();
   }
@@ -39,7 +22,8 @@ class ChatPanel extends Component {
     this.scrollChatToBottom();
   }
   componentWillUnmount() {
-    this.props.socketClient.unregisterMessageHandler();
+    // this.props.socketClient  .unregisterMessageHandler();
+    this.props.socketClient.off('message');
   }
   onMessageReceived(message) {
     this.props.addMessage(message);
@@ -50,25 +34,9 @@ class ChatPanel extends Component {
     }, 100);
   }
   render() {
-    console.log(this.props.history);
-    const history = this.props.history.map(message => (
-      <CardMessage key={message.id} message={message} fromMe={message.fromMe} />
-    ));
-
-    return (
-      <Scrollable className={this.props.className} ref={this.panelRef}>
-        <Content>
-          {history}
-          <EndMessage />
-        </Content>
-      </Scrollable>
-    );
+    return <ChatPanel panelRef={this.panelRef} {...this.props} />;
   }
 }
-
-ChatPanel.propTypes = {
-  socketClient: PropTypes.instanceOf(SocketClient)
-};
 
 const mapStateToProps = state => ({
   history: state.chat.history,
@@ -81,4 +49,4 @@ const mapDispatchToProps = dispatch =>
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ChatPanel);
+)(ChatPanelContainer);

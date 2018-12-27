@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import InputPanel from './InputPanel';
-import ChatPanel from './ChatPanel';
+import InputPanel from '../components/InputPanel';
+import ChatPanelContainer from './ChatPanelContainer';
 import { Typography } from '@material-ui/core/';
 
 const Header = styled.div`
@@ -23,7 +23,7 @@ const ChatWrapper = styled.div`
   flex-flow: column;
 `;
 
-const StyledChatPanel = styled(ChatPanel)`
+const StyledChatPanel = styled(ChatPanelContainer)`
   flex: 9;
   padding: 15px;
 `;
