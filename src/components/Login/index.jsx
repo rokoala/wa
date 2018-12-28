@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { TextField, Button } from '@material-ui/core';
-import { appLogin } from '../actions';
+import { appLogin } from '../../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 

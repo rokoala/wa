@@ -8,10 +8,13 @@ export const appLogin = username => ({
   username
 });
 
-export const addMessage = message => ({
+const addMessageSuccess = message => ({
   type: chatActions.ADD_MESSAGE,
   message
 });
+
+export const addMessage = message =>
+  api.addChatMessage(message).then(response => addMessageSuccess(response));
 
 export const setSocketClient = socketClient => ({
   type: appActions.SET_SOCKET_CLIENT,
@@ -27,10 +30,13 @@ export const setLocation = location => ({
   location
 });
 
-export const setRoom = room => ({
+const setRoomSuccess = room => ({
   type: appActions.SET_ROOM,
   room
 });
+
+export const setRoom = room =>
+  api.setRoom(room).then(response => setRoomSuccess(response));
 
 export const toogleRoomForm = () => ({
   type: appActions.TOOGLE_ROOM_FORM

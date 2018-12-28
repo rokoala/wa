@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import UserIcon from '@material-ui/icons/AccountCircleTwoTone';
 import CloseIcon from '@material-ui/icons/Close';
 import styled from 'styled-components';
+
 import {
   Button,
   List,
@@ -56,4 +58,27 @@ ListUserChat.propTypes = {
   })
 };
 
-export default ListUserChat;
+class ListUserChatContainer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: []
+    };
+  }
+  componentDidMount() {
+    this.props.socketClient.onlineUsers().then(users => {
+      this.setState({ users });
+    });
+  }
+  render() {
+    return (
+      <ListUserChat users={this.state.users} onClose={this.props.onClose} />
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  socketClient: state.app.socketClient
+});
+
+export default connect(mapStateToProps)(ListUserChatContainer);

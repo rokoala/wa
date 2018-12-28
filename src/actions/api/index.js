@@ -43,3 +43,23 @@ export const fetchRoomsByLocation = location => {
     });
   });
 };
+
+export const addChatMessage = message => {
+  const { socketClient } = Store.getState().app;
+  return new Promise((resolve, reject) => {
+    socketClient.emit('addMessage', message, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+};
+
+export const setRoom = room => {
+  const { socketClient } = Store.getState().app;
+  return new Promise((resolve, reject) => {
+    socketClient.emit('joinRoom', room, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  });
+};

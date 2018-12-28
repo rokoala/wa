@@ -16,7 +16,7 @@ const server = http.createServer(app);
 const io = socketIO(server);
 
 // creates a new room
-const room = chatManager('testRoom');
+const room = chatManager('mainroom');
 
 const clientManager = ClientManager();
 
@@ -25,10 +25,12 @@ io.on('connection', socket => {
     clientManager.registerClient(socket, { username });
   });
 
-  socket.on('socket:joinRoom', (roomId = 'mainroom') => {
-    const _roomId = roomId.toString();
-    socket.join(_roomId, () => {
-      socket.broadcast.to(_roomId).emit('socket:addUser', { username });
+  socket.on('joinRoom', (room, cb) => {
+    const _roomId = room.id.toString();
+    console.log('join ' + _roomId);
+    socket.join('mainroom', () => {
+      // socket.broadcast.to('mainroom').emit('socket:addUser');
+      cb(null, room);
     });
   });
 
@@ -38,10 +40,9 @@ io.on('connection', socket => {
     cb(null, RoomManager.getRoomsByLocation(location));
   });
 
-  socket.on('addmessage', message => {
-    //room.addMessage(message);
-
-    socket.broadcast.to('mainroom').emit('message', message);
+  socket.on('addMessage', message => {
+    const _message = room.addMessage(message);
+    socket.to('mainroom').emit('message', _message);
   });
 
   socket.on('socket:onlineUsers', callback => {

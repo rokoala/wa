@@ -3,15 +3,15 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ChatManagerContainer from '../containers/ChatManagerContainer';
-import LobbyContainer from '../containers/LobbyContainer';
-import UserLogin from '../containers/UserLogin';
+import Chat from '../components/Chat';
+import Lobby from '../components/Lobby';
+import Login from '../components/Login';
 import Geolocation from '../resources/Geolocation';
 import { setLocation, setSocketClient } from '../actions';
 import SocketClient from 'socket.io-client';
 import styled from 'styled-components';
 
-const StyledLobbyContainer = styled(LobbyContainer)`
+const StyledLobby = styled(Lobby)`
   flex: 0 1 20%;
   border-right: 1px solid lightgray;
 `;
@@ -22,7 +22,7 @@ const AppWrapper = styled.div`
   height: 100%;
 `;
 
-const StyledChat = styled(ChatManagerContainer)`
+const StyledChat = styled(Chat)`
   flex: 1;
 `;
 
@@ -47,11 +47,11 @@ class App extends Component {
     const { chatEnabled, location } = this.props;
     return chatEnabled && location ? (
       <AppWrapper>
-        <StyledLobbyContainer />
+        <StyledLobby />
         <StyledChat />
       </AppWrapper>
     ) : (
-      <UserLogin />
+      <Login />
     );
   }
 }

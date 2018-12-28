@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Typography, FormControl, TextField, Button } from '@material-ui/core';
 import styled from 'styled-components';
-import ArrowBack from '@material-ui/icons/ArrowBack';
 import { withStyles } from '@material-ui/core/styles';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import GeoLocation from '../../resources/Geolocation';
+import { addRoom, toogleRoomForm } from '../../actions';
 
 const Header = styled.div`
   display: flex;
@@ -71,4 +75,49 @@ RoomForm.propTypes = {
   onExitClick: PropTypes.func
 };
 
-export default withStyles(styles)(RoomForm);
+class RoomFormContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: ''
+    };
+
+    this.handleChangeText = this.handleChangeText.bind(this);
+    this.onAddBtnClick = this.onAddBtnClick.bind(this);
+  }
+  handleChangeText(event) {
+    this.setState({ name: event.target.value });
+  }
+  onAddBtnClick(event) {
+    GeoLocation.getLocation().then(pos => {
+      this.props.addRoom({
+        name: this.state.name,
+        location: {
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        }
+      });
+
+      this.props.toogleRoomForm();
+    });
+  }
+  render() {
+    return (
+      <RoomForm
+        handleChangeText={this.handleChangeText}
+        onAddBtnClick={this.onAddBtnClick}
+        name={this.state.name}
+        {...this.props}
+      />
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ toogleRoomForm, addRoom }, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles)(RoomFormContainer));
