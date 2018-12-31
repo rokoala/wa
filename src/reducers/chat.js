@@ -6,10 +6,6 @@ export const chat = (state = {}, action) => {
       return {
         history: [...state.history, action.message]
       };
-    case chatActions.RECEIVE_CHAT_MESSAGES:
-      return {
-        history: [...state.history, ...action.messages]
-      };
     case chatActions.INTIALIZE_MESSAGES:
       return {
         history: [...action.messages]

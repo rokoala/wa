@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchChatMessages, addMessage } from '../../actions';
+import { addMessage } from '../../actions';
 import CardMessage from '../CardMessage';
 
 const Scrollable = styled.div`
@@ -72,7 +72,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchChatMessages, addMessage }, dispatch);
+  bindActionCreators({ addMessage }, dispatch);
 
 export default connect(
   mapStateToProps,

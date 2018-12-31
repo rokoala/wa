@@ -1,7 +1,6 @@
 import { appActions, chatActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
 import * as api from './api';
-import { app } from '../reducers/app';
 
 export const appLogin = username => ({
   type: appActions.CHAT_LOGIN,
@@ -71,14 +70,6 @@ export const addRoom = _room => {
     room
   };
 };
-
-const receiveChatMessages = messages => ({
-  type: chatActions.RECEIVE_CHAT_MESSAGES,
-  messages
-});
-
-export const fetchChatMessages = () =>
-  api.fetchChatMessages().then(response => receiveChatMessages(response));
 
 const receiveRooms = rooms => ({
   type: roomActions.LOAD_ROOMS_BY_LOCATION,
