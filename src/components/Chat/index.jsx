@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addMessage, toogleRoomInfo, setRoom } from '../../actions';
+import { toogleRoomInfo } from '../../actions';
 import { Typography } from '@material-ui/core/';
 import ListUsers from '../ListUsers';
 import NoRoom from '../NoRoom/NoRoom';
@@ -105,7 +105,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addMessage, toogleRoomInfo, setRoom }, dispatch);
+  bindActionCreators({ toogleRoomInfo }, dispatch);
 
 export default connect(
   mapStateToProps,

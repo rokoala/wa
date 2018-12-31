@@ -54,10 +54,32 @@ export const addChatMessage = message => {
   });
 };
 
-export const setRoom = room => {
+export const setRoom = newRoom => {
+  const { socketClient, room } = Store.getState().app;
+
+  const joinRoom = (room, resolve, reject) => {
+    socketClient.emit('joinRoom', room, (err, data) => {
+      if (err) reject(err);
+      resolve(data);
+    });
+  };
+
+  return new Promise((resolve, reject) => {
+    if (room)
+      // leaves the room first
+      socketClient.emit('leaveRoom', room.id, err => {
+        if (err) reject(err);
+
+        joinRoom(newRoom, resolve, reject);
+      });
+    else joinRoom(newRoom, resolve, reject);
+  });
+};
+
+export const getMessagesByRoom = roomId => {
   const { socketClient } = Store.getState().app;
   return new Promise((resolve, reject) => {
-    socketClient.emit('joinRoom', room, (err, data) => {
+    socketClient.emit('getMessagesByRoom', roomId, (err, data) => {
       if (err) reject(err);
       resolve(data);
     });

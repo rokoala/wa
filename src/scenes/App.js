@@ -45,7 +45,8 @@ class App extends Component {
   }
   render() {
     const { chatEnabled, location } = this.props;
-    return chatEnabled && location ? (
+    //TODO: add location
+    return chatEnabled ? (
       <AppWrapper>
         <StyledLobby />
         <StyledChat />

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addMessage, fetchChatMessages } from '../../actions';
+import { fetchChatMessages, addMessage } from '../../actions';
 import CardMessage from '../CardMessage';
 
 const Scrollable = styled.div`
@@ -54,8 +54,7 @@ class ChatPanelContainer extends Component {
     this.props.socketClient.off('message');
   }
   onMessageReceived(message) {
-    console.log('received message');
-    console.log(message);
+    this.props.addMessage(message);
   }
   scrollChatToBottom() {
     setTimeout(() => {
@@ -73,7 +72,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ fetchChatMessages }, dispatch);
+  bindActionCreators({ fetchChatMessages, addMessage }, dispatch);
 
 export default connect(
   mapStateToProps,

@@ -9,7 +9,12 @@ module.exports = name => {
     return message;
   };
 
+  const getMessages = roomId => {
+    return history.filter(message => message.roomId === roomId);
+  };
+
   return {
-    addMessage
+    addMessage,
+    getMessages
   };
 };

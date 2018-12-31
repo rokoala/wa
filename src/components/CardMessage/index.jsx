@@ -3,16 +3,19 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
-const CardMessage = props => (
-  <Card style={props.cardStyle}>
-    <CardContent style={{ padding: 12 }}>
-      <Typography gutterBottom>
-        <b>{props.from}</b>
-      </Typography>
-      <Typography variant="body1">{props.text}</Typography>
-    </CardContent>
-  </Card>
-);
+const CardMessage = props => {
+  const { author, text } = props.message;
+  return (
+    <Card style={props.cardStyle}>
+      <CardContent style={{ padding: 12 }}>
+        <Typography gutterBottom>
+          <b>{author}</b>
+        </Typography>
+        <Typography variant="body1">{text}</Typography>
+      </CardContent>
+    </Card>
+  );
+};
 
 class CardMessageContainer extends Component {
   constructor(props) {

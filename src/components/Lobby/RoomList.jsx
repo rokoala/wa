@@ -10,7 +10,12 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import { toogleRoomForm, setRoom, getRoomsByLocation } from '../../actions';
+import {
+  toogleRoomForm,
+  setRoom,
+  getRoomsByLocation,
+  getMessagesByRoom
+} from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 import Divider from '@material-ui/core/Divider';
 import { bindActionCreators } from 'redux';
@@ -85,6 +90,7 @@ class RoomListContainer extends Component {
     this.props.toogleRoomForm();
   }
   handleJoinRoomItemClick(room) {
+    this.props.getMessagesByRoom(room.id);
     this.props.setRoom(room);
   }
   render() {
@@ -103,7 +109,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toogleRoomForm, setRoom, getRoomsByLocation }, dispatch);
+  bindActionCreators(
+    { toogleRoomForm, setRoom, getRoomsByLocation, getMessagesByRoom },
+    dispatch
+  );
 
 export default connect(
   mapStateToProps,

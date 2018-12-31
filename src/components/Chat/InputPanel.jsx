@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 import { bindActionCreators } from 'redux';
-import { addMessage } from '../../actions';
+import { sendMessage } from '../../actions';
 
 const Wrapper = styled.form`
   display: flex;
@@ -60,10 +60,10 @@ class InputPanelContainer extends Component {
   onSendMessage(evt) {
     evt.preventDefault();
     if (this.state.message != '') {
-      this.props.addMessage({
+      this.props.sendMessage({
         author: this.props.username,
         text: this.state.message,
-        roomId: '2'
+        roomId: this.props.roomId
       });
 
       this.inputMessage.focus();
@@ -85,13 +85,14 @@ class InputPanelContainer extends Component {
 
 const mapStateToProps = state => ({
   username: state.app.username,
+  roomId: state.app.room.id,
   socketClient: state.app.socketClient
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      addMessage
+      sendMessage
     },
     dispatch
   );

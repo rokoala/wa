@@ -21,16 +21,17 @@ const room = chatManager('mainroom');
 const clientManager = ClientManager();
 
 io.on('connection', socket => {
-  socket.on('socket:addUser', username => {
-    clientManager.registerClient(socket, { username });
-  });
-
   socket.on('joinRoom', (room, cb) => {
     const _roomId = room.id.toString();
-    console.log('join ' + _roomId);
-    socket.join('mainroom', () => {
-      // socket.broadcast.to('mainroom').emit('socket:addUser');
+    socket.join(_roomId, () => {
       cb(null, room);
+    });
+  });
+
+  socket.on('leaveRoom', (roomId, cb) => {
+    console.log('leaving room ' + roomId);
+    socket.leave(roomId, () => {
+      cb(null, 'left the room');
     });
   });
 
@@ -42,7 +43,12 @@ io.on('connection', socket => {
 
   socket.on('addMessage', message => {
     const _message = room.addMessage(message);
-    socket.to('mainroom').emit('message', _message);
+    io.to(message.roomId).emit('message', _message);
+  });
+
+  socket.on('getMessagesByRoom', (roomId, cb) => {
+    const _messages = room.getMessages(roomId);
+    cb(null, _messages);
   });
 
   socket.on('socket:onlineUsers', callback => {
@@ -50,7 +56,7 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    clientManager.removeClient(socket);
+    console.log('disconnected');
   });
 
   socket.on('error', function(err) {
