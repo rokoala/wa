@@ -1,25 +1,24 @@
 import { Store } from '../../store';
 
-//TODO: Use location as paramater
-export const fetchRoomsByLocation = location => {
+const socketClientEmit = (name, param) => {
   const { socketClient } = Store.getState().app;
   return new Promise((resolve, reject) => {
-    socketClient.emit('getRooms', location, (err, data) => {
+    socketClient.emit(name, param, (err, data) => {
       if (err) reject(err);
       resolve(data);
     });
   });
 };
 
-export const addChatMessage = message => {
-  const { socketClient } = Store.getState().app;
-  return new Promise((resolve, reject) => {
-    socketClient.emit('addMessage', message, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  });
-};
+//TODO: Use location as paramater
+export const fetchRoomsByLocation = location =>
+  socketClientEmit('getRooms', location);
+
+export const addChatMessage = message =>
+  socketClientEmit('addMessage', message);
+
+export const getMessagesByRoom = roomId =>
+  socketClientEmit('getMessagesByRoom', roomId);
 
 export const setRoom = newRoom => {
   const { socketClient, room } = Store.getState().app;
@@ -33,22 +32,11 @@ export const setRoom = newRoom => {
 
   return new Promise((resolve, reject) => {
     if (room)
-      // leaves the room first
       socketClient.emit('leaveRoom', room.id, err => {
         if (err) reject(err);
 
         joinRoom(newRoom, resolve, reject);
       });
     else joinRoom(newRoom, resolve, reject);
-  });
-};
-
-export const getMessagesByRoom = roomId => {
-  const { socketClient } = Store.getState().app;
-  return new Promise((resolve, reject) => {
-    socketClient.emit('getMessagesByRoom', roomId, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
   });
 };
