@@ -13,6 +13,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   toogleRoomForm,
   setRoom,
+  receivedRooms,
   getRoomsByLocation,
   getMessagesByRoom
 } from '../../actions';
@@ -84,7 +85,11 @@ class RoomListContainer extends Component {
     this.handleJoinRoomItemClick = this.handleJoinRoomItemClick.bind(this);
   }
   componentWillMount() {
+    this.props.socketClient.on('roomUpdated', this.onRoomListUpdated);
     this.props.getRoomsByLocation();
+  }
+  onRoomListUpdated(rooms) {
+    this.props.receivedRooms(rooms);
   }
   handleAddRoomItemClick() {
     this.props.toogleRoomForm();
@@ -105,12 +110,19 @@ class RoomListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  rooms: state.rooms
+  rooms: state.rooms,
+  socketClient: state.app.socketClient
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
-    { toogleRoomForm, setRoom, getRoomsByLocation, getMessagesByRoom },
+    {
+      toogleRoomForm,
+      setRoom,
+      receivedRooms,
+      getRoomsByLocation,
+      getMessagesByRoom
+    },
     dispatch
   );
 

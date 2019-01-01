@@ -2,10 +2,10 @@ import { appActions } from '../actions/actionTypes';
 
 export const app = (state = {}, action) => {
   switch (action.type) {
-    case appActions.CHAT_LOGIN:
+    case appActions.LOGIN:
       return {
         ...state,
-        username: action.username,
+        user: action.user,
         chatEnabled: true
       };
     case appActions.TOOGLE_ROOM_INFO:

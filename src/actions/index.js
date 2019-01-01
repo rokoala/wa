@@ -2,10 +2,13 @@ import { appActions, chatActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
 import * as api from './api';
 
-export const appLogin = username => ({
-  type: appActions.CHAT_LOGIN,
-  username
+const appLoginSuccess = user => ({
+  type: appActions.LOGIN,
+  user
 });
+
+export const appLogin = (username, password) =>
+  api.login(username, password).then(response => appLoginSuccess(response));
 
 const addMessageSuccessConfirmation = message => ({
   type: chatActions.ADD_MESSAGE_CONFIRMATION,
@@ -56,6 +59,11 @@ export const toogleRoomForm = () => ({
   type: appActions.TOOGLE_ROOM_FORM
 });
 
+// export const addRoomSuccess = room => ({
+//   type: roomActions.ADD_ROOM,
+//   room
+// })
+
 export const addRoom = _room => {
   const room = {
     id: uid(_room), //TODO: Get the id from database
@@ -71,10 +79,10 @@ export const addRoom = _room => {
   };
 };
 
-const receiveRooms = rooms => ({
+export const receivedRooms = rooms => ({
   type: roomActions.LOAD_ROOMS_BY_LOCATION,
   rooms
 });
 
 export const getRoomsByLocation = location =>
-  api.fetchRoomsByLocation(location).then(response => receiveRooms(response));
+  api.fetchRoomsByLocation(location).then(response => receivedRooms(response));

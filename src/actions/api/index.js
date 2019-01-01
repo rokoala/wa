@@ -1,14 +1,18 @@
 import { Store } from '../../store';
 
-const socketClientEmit = (name, param) => {
+const socketClientEmit = (name, ...param) => {
   const { socketClient } = Store.getState().app;
   return new Promise((resolve, reject) => {
-    socketClient.emit(name, param, (err, data) => {
+    socketClient.emit(name, ...param, (err, data) => {
       if (err) reject(err);
+      console.log(data);
       resolve(data);
     });
   });
 };
+
+export const login = (username, password) =>
+  socketClientEmit('login', username, password);
 
 //TODO: Use location as paramater
 export const fetchRoomsByLocation = location =>

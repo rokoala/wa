@@ -1,26 +1,21 @@
-module.exports = () => {
-  const clients = new Map();
-
-  const registerClient = (client, user) => {
-    clients.set(client.id, { client, user });
-  };
-
-  const removeClient = client => {
-    clients.delete(client.id);
-  };
-
-  const onlineUsers = () => {
-    return Array.from(clients.values()).map(c => {
-      return {
-        id: c.client.id,
-        username: c.user.username
-      };
-    });
-  };
-
-  return {
-    registerClient,
-    removeClient,
-    onlineUsers
-  };
+const Users = {
+  joao: {
+    id: 1,
+    name: 'Joao'
+  },
+  maria: {
+    id: 2,
+    name: 'Maria'
+  }
 };
+
+const ClientManager = {
+  createUser: user => {
+    //implements
+  },
+  login(username, password) {
+    return Users[username] || {};
+  }
+};
+
+module.exports = ClientManager;

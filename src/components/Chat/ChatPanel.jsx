@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addMessage } from '../../actions';
 import CardMessage from '../CardMessage';
+import { uid } from 'react-uid';
 
 const Scrollable = styled.div`
   height: 500px;
@@ -22,7 +23,7 @@ const EndMessage = styled.div`
 
 const ChatPanel = props => {
   const history = props.history.map(message => (
-    <CardMessage key={message.id} message={message} fromMe={message.fromMe} />
+    <CardMessage key={uid(message)} message={message} fromMe={message.fromMe} />
   ));
 
   return (

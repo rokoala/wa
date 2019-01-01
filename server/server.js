@@ -1,8 +1,8 @@
 const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
-const chatManager = require('./chatManager.js');
 const ClientManager = require('./ClientManager');
+// const ChatManager = require('./ChatManager.js');
 const RoomManager = require('./RoomManager');
 const app = express();
 
@@ -15,39 +15,39 @@ const server = http.createServer(app);
 // creates a socket using the server instance
 const io = socketIO(server);
 
-// creates a new room
-const room = chatManager('mainroom');
-
-const clientManager = ClientManager();
-
 io.on('connection', socket => {
-  socket.on('joinRoom', (room, cb) => {
-    const _roomId = room.id.toString();
-    socket.join(_roomId, () => {
+  socket.on('login', (username, password, cb) => {
+    const user = ClientManager.login(username, password);
+    cb(null, user);
+  });
+
+  socket.on('joinRoom', (userId, room, cb) => {
+    RoomManager.subscribeUser(userId, room.id);
+    socket.join(room.id, () => {
       cb(null, room);
     });
   });
 
   socket.on('leaveRoom', (roomId, cb) => {
-    console.log('leaving room ' + roomId);
     socket.leave(roomId, () => {
       cb(null, 'left the room');
     });
   });
 
-  socket.on('addRoom', room => {});
+  socket.on('addRoom', (room, cb) => {
+    cb(null, 'added room');
+  });
 
   socket.on('getRooms', (location, cb) => {
     cb(null, RoomManager.getRoomsByLocation(location));
   });
 
   socket.on('addMessage', message => {
-    const _message = room.addMessage(message);
-    io.to(message.roomId).emit('message', _message);
+    io.to(message.roomId).emit('message', message);
   });
 
-  socket.on('getMessagesByRoom', (roomId, cb) => {
-    const _messages = room.getMessages(roomId);
+  socket.on('getMessagesByRoom', (userId, roomId, cb) => {
+    const _messages = RoomManager.getLastMessages(userId, roomId);
     cb(null, _messages);
   });
 

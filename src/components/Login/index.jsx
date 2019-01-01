@@ -31,7 +31,7 @@ class UserLogin extends Component {
   }
   onLogin(evt) {
     evt.preventDefault();
-    this.props.appLogin(this.state.username);
+    this.props.appLogin(this.state.username, 'FOOOOO');
   }
   render() {
     return (

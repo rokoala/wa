@@ -1,20 +1,16 @@
-module.exports = name => {
-  const history = [];
-  let id = 0;
+let history = [];
+let id = 0;
 
-  const addMessage = message => {
+const ChatManager = {
+  addMessage: message => {
     const _message = message;
     _message.id = id++;
     history.push(message);
     return message;
-  };
-
-  const getMessages = roomId => {
+  },
+  getMessages: roomId => {
     return history.filter(message => message.roomId === roomId);
-  };
-
-  return {
-    addMessage,
-    getMessages
-  };
+  }
 };
+
+module.exports = ChatManager;

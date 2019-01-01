@@ -6,8 +6,8 @@ import promise from 'redux-promise';
 
 const persistedState = {
   app: {
-    username: 'Test',
-    chatEnabled: true,
+    user: {},
+    chatEnabled: false,
     roomInfo: false,
     room: null,
     showRoomForm: false,
