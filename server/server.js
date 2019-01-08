@@ -2,8 +2,8 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const ClientManager = require('./ClientManager');
-const RoomManager = require('./RoomManager');
 const Authenticator = require('./Authenticator');
+const SocketHandler = require('./SocketHandler');
 const app = express();
 
 // server port
@@ -15,68 +15,19 @@ const server = http.createServer(app);
 // creates a socket using the server instance
 const io = socketIO(server);
 
-// io.on('connection', socket => {
-//   socket.on('login', (username, password, cb) => {
-//     const user = ClientManager.login(username, password);
-//     cb(null, user);
-//   });
-
-//   socket.on('joinRoom', (userId, room, cb) => {
-//     RoomManager.subscribeUser(userId, room.id);
-//     socket.join(room.id, () => {
-//       cb(null, room);
-//     });
-//   });
-
-//   socket.on('leaveRoom', (roomId, cb) => {
-//     socket.leave(roomId, () => {
-//       cb(null, 'left the room');
-//     });
-//   });
-
-//   socket.on('addRoom', (room, cb) => {
-//     cb(null, 'added room');
-//   });
-
-//   socket.on('getRooms', (location, cb) => {
-//     cb(null, RoomManager.getRoomsByLocation(location));
-//   });
-
-//   socket.on('addMessage', message => {
-//     io.to(message.roomId).emit('message', message);
-//   });
-
-//   socket.on('getMessagesByRoom', (roomId, cb) => {
-//     const _messages = RoomManager.getLastMessages(userId, roomId);
-//     cb(null, _messages);
-//   });
-
-//   socket.on('socket:onlineUsers', callback => {
-//     callback(null, clientManager.onlineUsers());
-//   });
-
-//   socket.on('disconnect', () => {
-//     console.log('disconnected');
-//   });
-
-//   socket.on('error', function(err) {
-//     console.log('received error from client:', socket.id);
-//   });
-// });
-
 Authenticator(io, {
-  authenticate: (client, data, callback) => {
-    const { username, password } = data;
-
-    callback(null, username);
+  authenticate: (client, { username, password }, callback) => {
+    const user = ClientManager.login(username, password);
+    if (user) callback(null, user);
+    else callback('Error: user or password wrong');
   },
   onSuccess: (socket, data) => {
-    console.log(data);
+    SocketHandler(io, socket, data);
   }
 });
 
 // starts a unix socket and listen for connections based on the port
 server.listen(port, err => {
   if (err) throw err;
-  console.log(`server listening to port 8000`);
+  console.log('\x1b[33m%s\x1b[0m', `server listening to port ${port}`);
 });

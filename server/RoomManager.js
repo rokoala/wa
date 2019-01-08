@@ -1,6 +1,6 @@
 let rooms = [
   {
-    id: 1,
+    id: '1-room',
     name: 'Pizzaria do Rei Jorge',
     lastMessage: 'Olá',
     subscribers: [],
@@ -8,7 +8,7 @@ let rooms = [
     location: ''
   },
   {
-    id: 2,
+    id: '2-room',
     name: 'Shopping Ipiranga',
     lastMessage: 'Ok!',
     subscribers: [],

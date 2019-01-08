@@ -4,10 +4,7 @@ const socketClientEmit = (name, ...param) => {
   const { socketClient } = Store.getState().app;
   return new Promise((resolve, reject) => {
     socketClient.emit(name, ...param, (err, data) => {
-      console.log(err);
-      console.log(data);
       if (err) reject(err);
-      console.log(data);
       resolve(data);
     });
   });

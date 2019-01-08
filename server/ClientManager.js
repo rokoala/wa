@@ -1,10 +1,10 @@
 const Users = {
   joao: {
-    id: 1,
+    id: '1-room',
     name: 'Joao'
   },
   maria: {
-    id: 2,
+    id: '2-room',
     name: 'Maria'
   }
 };
@@ -14,7 +14,7 @@ const ClientManager = {
     //implements
   },
   login(username, password) {
-    return Users[username] || {};
+    return Users[username];
   }
 };
 
