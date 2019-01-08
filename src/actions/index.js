@@ -59,24 +59,19 @@ export const toogleRoomForm = () => ({
   type: appActions.TOOGLE_ROOM_FORM
 });
 
-// export const addRoomSuccess = room => ({
-//   type: roomActions.ADD_ROOM,
-//   room
-// })
+const addRoomSuccess = room => ({
+  type: roomActions.ADD_ROOM,
+  room
+});
 
 export const addRoom = _room => {
   const room = {
     id: uid(_room), //TODO: Get the id from database
-    history: [],
-    lastMessage: '',
     name: _room.name,
     location: _room.location
   };
 
-  return {
-    type: roomActions.ADD_ROOM,
-    room
-  };
+  return api.addRoom(room).then(response => addRoomSuccess(response));
 };
 
 export const receivedRooms = rooms => ({

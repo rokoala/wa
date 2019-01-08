@@ -43,3 +43,5 @@ export const setRoom = newRoom => {
     else joinRoom(newRoom, resolve, reject);
   });
 };
+
+export const addRoom = room => socketClientEmit('addRoom', room);

@@ -2,7 +2,6 @@ let rooms = [
   {
     id: '1-room',
     name: 'Pizzaria do Rei Jorge',
-    lastMessage: 'Olá',
     subscribers: [],
     lastMessages: [],
     location: ''
@@ -10,28 +9,47 @@ let rooms = [
   {
     id: '2-room',
     name: 'Shopping Ipiranga',
-    lastMessage: 'Ok!',
     subscribers: [],
     lastMessages: [],
     location: ''
   }
 ];
 
+const defaultRoom = {
+  id: '',
+  name: '',
+  subscribers: [],
+  lastMessages: [],
+  location: ''
+};
+
 const RoomManager = {
-  currentRoom: null,
   addRoom: room => {
-    rooms.push(room);
+    const _room = { ...defaultRoom, ...room };
+    rooms.push(_room);
   },
   subscribeUser(userId, roomId) {
     rooms.filter(room => {
-      if (room.id === roomId) room.subscribers.push(userId);
+      if (room.id === roomId) {
+        if (room.subscribers.indexOf(userId.toString()) < 0)
+          room.subscribers.push(userId);
+        else console.warn('user already subscribed');
+      }
+    });
+  },
+  addMessage({ text, roomId }, userId) {
+    rooms.filter(room => {
+      if (room.id.toString() === roomId) {
+        room.lastMessages.push({ text, userId });
+      }
     });
   },
   getLastMessages(roomId, userId) {
     let lastMessages = [];
     rooms.filter(room => {
       if (room.id === roomId) {
-        if (room.subscribers.indexOf(userId)) lastMessages = room.lastMessages;
+        if (room.subscribers.indexOf(userId.toString()) >= 0)
+          lastMessages = room.lastMessages;
       }
     });
 

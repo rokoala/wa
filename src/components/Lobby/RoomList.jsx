@@ -55,14 +55,17 @@ const RoomList = props => {
       <List>
         {rooms.map(room => {
           return (
-            <ListItem key={room.id} button>
+            <ListItem
+              onClick={() => {
+                onItemClick(room);
+              }}
+              key={room.id}
+              button
+            >
               {/* <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar> */}
               <StyledListItem
-                onClick={() => {
-                  onItemClick(room);
-                }}
                 primary={room.name}
                 secondary={room.lastMessage}
               />

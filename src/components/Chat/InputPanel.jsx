@@ -61,7 +61,6 @@ class InputPanelContainer extends Component {
     evt.preventDefault();
     if (this.state.message != '') {
       this.props.sendMessage({
-        author: this.props.username,
         text: this.state.message,
         roomId: this.props.roomId
       });

@@ -55,7 +55,6 @@ class ChatPanelContainer extends Component {
     this.props.socketClient.off('message');
   }
   onMessageReceived(message) {
-    console.log('message received:' + message);
     this.props.addMessage(message);
   }
   scrollChatToBottom() {

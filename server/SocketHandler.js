@@ -1,8 +1,9 @@
 const RoomManager = require('./RoomManager');
 
-const SocketHandler = (io, socket, { id }) => {
+const SocketHandler = (io, socket, { id, username }) => {
   const userId = id;
 
+  // Check if the user is logged
   socket.use((packet, next) => {
     if (userId) return next();
     next(new Error('not authorized'));
@@ -22,6 +23,8 @@ const SocketHandler = (io, socket, { id }) => {
   });
 
   socket.on('addRoom', (room, cb) => {
+    console.log(room);
+    RoomManager.addRoom(room);
     cb(null, 'added room');
   });
 
@@ -30,11 +33,13 @@ const SocketHandler = (io, socket, { id }) => {
   });
 
   socket.on('addMessage', message => {
+    RoomManager.addMessage(message, userId);
     io.emit(message.roomId).emit('message', message);
   });
 
+  // Retrive the last messages by room
   socket.on('getMessagesByRoom', (roomId, cb) => {
-    const _messages = RoomManager.getLastMessages(userId, roomId);
+    const _messages = RoomManager.getLastMessages(roomId, userId);
     cb(null, _messages);
   });
 
