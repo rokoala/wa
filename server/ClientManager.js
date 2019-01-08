@@ -1,11 +1,11 @@
 const Users = {
   joao: {
     id: '1',
-    name: 'Joao'
+    username: 'joao'
   },
   maria: {
     id: '2',
-    name: 'Maria'
+    username: 'maria'
   }
 };
 

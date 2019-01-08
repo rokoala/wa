@@ -37,12 +37,14 @@ const RoomManager = {
       }
     });
   },
-  addMessage({ text, roomId }, userId) {
+  addMessage({ text, roomId }, userId, username) {
+    const message = { text, userId, username };
     rooms.filter(room => {
       if (room.id.toString() === roomId) {
-        room.lastMessages.push({ text, userId });
+        room.lastMessages.push(message);
       }
     });
+    return message;
   },
   getLastMessages(roomId, userId) {
     let lastMessages = [];
@@ -52,7 +54,7 @@ const RoomManager = {
           lastMessages = room.lastMessages;
       }
     });
-
+    console.log(lastMessages);
     return lastMessages;
   },
   getRoomsByLocation: location => {

@@ -23,7 +23,6 @@ const SocketHandler = (io, socket, { id, username }) => {
   });
 
   socket.on('addRoom', (room, cb) => {
-    console.log(room);
     RoomManager.addRoom(room);
     cb(null, 'added room');
   });
@@ -33,8 +32,8 @@ const SocketHandler = (io, socket, { id, username }) => {
   });
 
   socket.on('addMessage', message => {
-    RoomManager.addMessage(message, userId);
-    io.emit(message.roomId).emit('message', message);
+    const _message = RoomManager.addMessage(message, userId, username);
+    io.emit(message.roomId).emit('message', _message);
   });
 
   // Retrive the last messages by room

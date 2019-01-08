@@ -4,12 +4,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const CardMessage = props => {
-  const { author, text } = props.message;
+  console.log(props.message);
+  const { username, text } = props.message;
   return (
     <Card style={props.cardStyle}>
       <CardContent style={{ padding: 12 }}>
         <Typography gutterBottom>
-          <b>{author}</b>
+          <b>{username}</b>
         </Typography>
         <Typography variant="body1">{text}</Typography>
       </CardContent>
