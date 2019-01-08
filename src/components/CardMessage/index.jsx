@@ -4,7 +4,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 
 const CardMessage = props => {
-  console.log(props.message);
   const { username, text } = props.message;
   return (
     <Card style={props.cardStyle}>
@@ -22,14 +21,15 @@ class CardMessageContainer extends Component {
   constructor(props) {
     super(props);
 
-    this.cardStyle = Object.assign(
-      {},
-      {
+    this.cardStyle = {
+      ...{
         minWidth: 5,
         margin: 2
       },
-      props.fromMe ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }
-    );
+      ...(props.fromMe
+        ? { alignSelf: 'flex-end', backgroundColor: '#dcffd5' }
+        : { alignSelf: 'flex-start' })
+    };
   }
   render() {
     return <CardMessage cardStyle={this.cardStyle} {...this.props} />;

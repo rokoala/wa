@@ -23,7 +23,11 @@ const EndMessage = styled.div`
 
 const ChatPanel = props => {
   const history = props.history.map(message => (
-    <CardMessage key={uid(message)} message={message} fromMe={message.fromMe} />
+    <CardMessage
+      key={uid(message)}
+      message={message}
+      fromMe={message.userId === props.userId}
+    />
   ));
 
   return (
@@ -68,6 +72,7 @@ class ChatPanelContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+  userId: state.app.user.id,
   history: state.chat.history,
   socketClient: state.app.socketClient
 });
