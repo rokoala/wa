@@ -1,30 +1,15 @@
-let rooms = [
-  // {
-  //   id: '1-room',
-  //   name: 'Pizzaria do Rei Jorge',
-  //   subscribers: [],
-  //   lastMessages: [],
-  //   location: ''
-  // },
-  // {
-  //   id: '2-room',
-  //   name: 'Shopping Ipiranga',
-  //   subscribers: [],
-  //   lastMessages: [],
-  //   location: ''
-  // }
-];
-
-const defaultRoom = {
-  id: '',
-  name: '',
-  subscribers: [],
-  lastMessages: [],
-  location: ''
-};
+let rooms = [];
 
 const RoomManager = {
   addRoom: room => {
+    const defaultRoom = {
+      id: '',
+      name: '',
+      subscribers: [],
+      lastMessages: [],
+      location: ''
+    };
+
     const _room = { ...defaultRoom, ...room };
     rooms.push(_room);
     return _room;
@@ -41,13 +26,8 @@ const RoomManager = {
   addMessage({ text, roomId }, userId, username) {
     const message = { text, userId, roomId, username };
     rooms.filter(room => {
-      console.log(`room.id => ${room.id}`);
-      console.log(`roomId => ${roomId}`);
       if (room.id.toString() === roomId) {
-        console.log(`adding to room...`);
-        console.log(room);
         room.lastMessages.push(message);
-        console.log(room);
       }
     });
     return message;

@@ -33,7 +33,6 @@ const SocketHandler = (io, socket, { id, username }) => {
 
   socket.on('addMessage', message => {
     const _message = RoomManager.addMessage(message, userId, username);
-    console.log(`added message to ${_message.roomId}`);
     io.to(message.roomId).emit('message', _message);
   });
 

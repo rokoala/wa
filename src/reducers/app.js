@@ -1,4 +1,4 @@
-import { appActions } from '../actions/actionTypes';
+import { appActions, roomActions } from '../actions/actionTypes';
 
 export const app = (state = {}, action) => {
   switch (action.type) {
@@ -32,6 +32,14 @@ export const app = (state = {}, action) => {
       return {
         ...state,
         showRoomForm: !state.showRoomForm
+      };
+    case roomActions.ADD_MESSAGE_CONFIRMATION:
+      if (state.room.id.toString() === action.message.roomId) {
+        state.room.lastMessages = [...state.room.lastMessages, action.message];
+      }
+
+      return {
+        ...state
       };
     default:
       return state;

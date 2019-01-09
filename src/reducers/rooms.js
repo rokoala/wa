@@ -8,15 +8,13 @@ export const rooms = (state = [], action) => {
       return action.rooms;
 
     case roomActions.ADD_MESSAGE_CONFIRMATION:
-      console.log(state);
-      const rooms = state.map(room => {
-        if (room.id === action.message.roomId) {
-          room.lastMessages.push(action.message);
-        }
+      let rooms = state;
+      return rooms.map(room => {
+        if (room.id === action.message.roomId)
+          room.lastMessages = [...room.lastMessages, action.message];
+
         return room;
       });
-
-      return rooms;
     default:
       return state;
   }
