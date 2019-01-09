@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { toogleRoomInfo } from '../../actions';
 import { Typography } from '@material-ui/core/';
 import ListUsers from '../ListUsers';
-import NoRoom from '../NoRoom/NoRoom';
+import RoomCardList from '../RoomCardList';
 import InputPanel from './InputPanel';
 import ChatPanel from './ChatPanel';
 import styled from 'styled-components';
@@ -92,7 +92,7 @@ class ChatContainer extends Component {
                 onHeaderClick={this.handleHeaderChatClick}
               />
             ) : (
-              <NoRoom />
+              <RoomCardList />
             )}
           </Content>
         )}
