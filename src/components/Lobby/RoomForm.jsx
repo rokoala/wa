@@ -84,12 +84,13 @@ class RoomFormContainer extends Component {
     };
 
     this.handleChangeText = this.handleChangeText.bind(this);
-    this.onAddBtnClick = this.onAddBtnClick.bind(this);
+    this.handleAddBtnClick = this.handleAddBtnClick.bind(this);
+    this.handleExitClick = this.handleExitClick.bind(this);
   }
   handleChangeText(event) {
     this.setState({ name: event.target.value });
   }
-  onAddBtnClick(event) {
+  handleAddBtnClick(event) {
     GeoLocation.getLocation().then(pos => {
       this.props.addRoom({
         name: this.state.name,
@@ -102,11 +103,15 @@ class RoomFormContainer extends Component {
       this.props.toogleRoomForm();
     });
   }
+  handleExitClick(event) {
+    this.props.toogleRoomForm();
+  }
   render() {
     return (
       <RoomForm
         handleChangeText={this.handleChangeText}
-        onAddBtnClick={this.onAddBtnClick}
+        onAddBtnClick={this.handleAddBtnClick}
+        onExitClick={this.handleExitClick}
         name={this.state.name}
         {...this.props}
       />
