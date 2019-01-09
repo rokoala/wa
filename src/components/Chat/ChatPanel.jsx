@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { addMessage } from '../../actions';
 import CardMessage from '../CardMessage';
 import { uid } from 'react-uid';
 
@@ -46,20 +45,12 @@ class ChatPanelContainer extends Component {
 
     this.panelRef = React.createRef();
     this.scrollChatToBottom = this.scrollChatToBottom.bind(this);
-    this.onMessageReceived = this.onMessageReceived.bind(this);
   }
   componentDidMount() {
-    this.props.socketClient.on('message', this.onMessageReceived);
     this.scrollChatToBottom();
   }
   componentDidUpdate() {
     this.scrollChatToBottom();
-  }
-  componentWillUnmount() {
-    this.props.socketClient.off('message');
-  }
-  onMessageReceived(message) {
-    this.props.addMessage(message);
   }
   scrollChatToBottom() {
     setTimeout(() => {
@@ -73,14 +64,7 @@ class ChatPanelContainer extends Component {
 
 const mapStateToProps = state => ({
   userId: state.app.user.id,
-  history: state.chat.history,
-  socketClient: state.app.socketClient
+  history: state.app.room.lastMessages
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators({ addMessage }, dispatch);
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ChatPanelContainer);
+export default connect(mapStateToProps)(ChatPanelContainer);

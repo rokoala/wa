@@ -14,8 +14,7 @@ import {
   toogleRoomForm,
   setRoom,
   receivedRooms,
-  getRoomsByLocation,
-  getMessagesByRoom
+  getRoomsByLocation
 } from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 import Divider from '@material-ui/core/Divider';
@@ -36,7 +35,6 @@ const ListItemChat = withStyles({
 
 const RoomList = props => {
   const { rooms, onItemClick, onAddRoomItemClick } = props;
-  console.log(rooms);
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
@@ -99,7 +97,6 @@ class RoomListContainer extends Component {
     this.props.toogleRoomForm();
   }
   handleJoinRoomItemClick(room) {
-    this.props.getMessagesByRoom(room.id);
     this.props.setRoom(room);
   }
   render() {
@@ -124,8 +121,7 @@ const mapDispatchToProps = dispatch =>
       toogleRoomForm,
       setRoom,
       receivedRooms,
-      getRoomsByLocation,
-      getMessagesByRoom
+      getRoomsByLocation
     },
     dispatch
   );

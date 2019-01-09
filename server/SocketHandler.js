@@ -23,8 +23,8 @@ const SocketHandler = (io, socket, { id, username }) => {
   });
 
   socket.on('addRoom', (room, cb) => {
-    RoomManager.addRoom(room);
-    cb(null, 'added room');
+    const _room = RoomManager.addRoom(room);
+    cb(null, _room);
   });
 
   socket.on('getRooms', (location, cb) => {
@@ -33,13 +33,8 @@ const SocketHandler = (io, socket, { id, username }) => {
 
   socket.on('addMessage', message => {
     const _message = RoomManager.addMessage(message, userId, username);
+    console.log(`added message to ${_message.roomId}`);
     io.to(message.roomId).emit('message', _message);
-  });
-
-  // Retrive the last messages by room
-  socket.on('getMessagesByRoom', (roomId, cb) => {
-    const _messages = RoomManager.getLastMessages(roomId, userId);
-    cb(null, _messages);
   });
 
   socket.on('socket:onlineUsers', callback => {

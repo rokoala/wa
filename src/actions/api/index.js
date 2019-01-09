@@ -20,9 +20,6 @@ export const fetchRoomsByLocation = location =>
 export const addChatMessage = message =>
   socketClientEmit('addMessage', message);
 
-export const getMessagesByRoom = roomId =>
-  socketClientEmit('getMessagesByRoom', roomId);
-
 export const setRoom = newRoom => {
   const { socketClient, room } = Store.getState().app;
 

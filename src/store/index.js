@@ -14,10 +14,7 @@ const persistedState = {
     socketClient: null,
     location: null
   },
-  rooms: [],
-  chat: {
-    history: []
-  }
+  rooms: []
 };
 
 const configureStore = () => {

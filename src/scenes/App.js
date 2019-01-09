@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import Chat from '../components/Chat';
 import Lobby from '../components/Lobby';
 import Login from '../components/Login';
+import AppWrapper from './AppWrapper';
 import Geolocation from '../resources/Geolocation';
 import { setLocation, setSocketClient } from '../actions';
 import SocketClient from 'socket.io-client';
@@ -14,12 +15,6 @@ import styled from 'styled-components';
 const StyledLobby = styled(Lobby)`
   flex: 0 1 20%;
   border-right: 1px solid lightgray;
-`;
-
-const AppWrapper = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
 `;
 
 const StyledChat = styled(Chat)`
