@@ -33,7 +33,7 @@ const SocketHandler = (io, socket, { id, username }) => {
 
   socket.on('addMessage', message => {
     const _message = RoomManager.addMessage(message, userId, username);
-    io.emit(message.roomId).emit('message', _message);
+    io.to(message.roomId).emit('message', _message);
   });
 
   // Retrive the last messages by room
