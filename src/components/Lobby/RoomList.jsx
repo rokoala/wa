@@ -36,7 +36,7 @@ const ListItemChat = withStyles({
 
 const RoomList = props => {
   const { rooms, onItemClick, onAddRoomItemClick } = props;
-
+  console.log(rooms);
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
@@ -54,6 +54,10 @@ const RoomList = props => {
       <Divider />
       <List>
         {rooms.map(room => {
+          const lastMessage = room.lastMessages[0]
+            ? room.lastMessages[room.lastMessages.length - 1].text
+            : '';
+
           return (
             <ListItem
               onClick={() => {
@@ -65,10 +69,7 @@ const RoomList = props => {
               {/* <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar> */}
-              <StyledListItem
-                primary={room.name}
-                secondary={room.lastMessage}
-              />
+              <StyledListItem primary={room.name} secondary={lastMessage} />
             </ListItem>
           );
         })}
