@@ -80,7 +80,10 @@ class ChatContainer extends Component {
     return (
       <div className={this.props.className}>
         {this.props.roomInfo ? (
-          <ListUsers onClose={this.onCloseRoomInfo} />
+          <ListUsers
+            subscribers={this.props.room.subscribers}
+            onClose={this.onCloseRoomInfo}
+          />
         ) : (
           <Content>
             {this.props.room ? (

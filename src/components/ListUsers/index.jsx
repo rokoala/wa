@@ -33,7 +33,7 @@ const ListUserChat = props => {
           <CloseIcon />
         </Button>
         <Typography style={{ color: 'white', fontWeight: 300 }} variant="h5">
-          Usuários Online
+          Usuários Inscritos
         </Typography>
       </Header>
       <List>
@@ -65,20 +65,10 @@ class ListUserChatContainer extends Component {
       users: []
     };
   }
-  componentDidMount() {
-    this.props.socketClient.onlineUsers().then(users => {
-      this.setState({ users });
-    });
-  }
   render() {
     return (
       <ListUserChat users={this.state.users} onClose={this.props.onClose} />
     );
   }
 }
-
-const mapStateToProps = state => ({
-  socketClient: state.app.socketClient
-});
-
-export default connect(mapStateToProps)(ListUserChatContainer);
+export default ListUserChatContainer;
