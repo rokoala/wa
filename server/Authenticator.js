@@ -1,14 +1,3 @@
-const Users = {
-  joao: {
-    id: '1-room',
-    name: 'Joao'
-  },
-  maria: {
-    id: '2-room',
-    name: 'Maria'
-  }
-};
-
 const Authenticator = (io, options) => {
   const defaultOptions = {
     // timeout: undefined,
