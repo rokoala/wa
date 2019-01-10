@@ -13,7 +13,8 @@ import SocketClient from 'socket.io-client';
 import styled from 'styled-components';
 
 const StyledLobby = styled(Lobby)`
-  flex: 0 1 20%;
+  // flex: 0 1 400px;
+  width: 400px;
   border-right: 1px solid lightgray;
 `;
 

@@ -25,6 +25,10 @@ import moment from 'moment';
 const StyledListItem = withStyles({
   primary: {
     'font-weight': 500
+  },
+  secondary: {
+    overflow: 'hidden',
+    'text-overflow': 'ellipsis'
   }
 })(ListItemText);
 
