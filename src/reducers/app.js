@@ -28,10 +28,10 @@ export const app = (state = {}, action) => {
         ...state,
         room: action.room
       };
-    case appActions.TOOGLE_ROOM_FORM:
+    case appActions.SET_ROOM_FORM_VISIBILITY:
       return {
         ...state,
-        showRoomForm: !state.showRoomForm
+        showRoomForm: action.showRoomForm
       };
     case roomActions.ADD_MESSAGE_CONFIRMATION:
       if (state.room.id.toString() === action.message.roomId) {

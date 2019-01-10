@@ -11,7 +11,7 @@ import {
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  toogleRoomForm,
+  setRoomFormVisibility,
   setRoom,
   receivedRooms,
   getRoomsByLocation
@@ -113,7 +113,7 @@ class RoomListContainer extends Component {
     this.props.receivedRooms(rooms);
   }
   handleAddRoomItemClick() {
-    this.props.toogleRoomForm();
+    this.props.setRoomFormVisibility(true);
   }
   handleJoinRoomItemClick(room) {
     this.props.setRoom(room);
@@ -137,7 +137,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      toogleRoomForm,
+      setRoomFormVisibility,
       setRoom,
       receivedRooms,
       getRoomsByLocation

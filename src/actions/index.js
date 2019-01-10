@@ -1,6 +1,7 @@
 import { appActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
 import * as api from './api';
+import { app } from '../reducers/app';
 
 const appLoginSuccess = user => ({
   type: appActions.LOGIN,
@@ -42,8 +43,9 @@ const setRoomSuccess = room => ({
 export const setRoom = room =>
   api.setRoom(room).then(response => setRoomSuccess(response));
 
-export const toogleRoomForm = () => ({
-  type: appActions.TOOGLE_ROOM_FORM
+export const setRoomFormVisibility = visibility => ({
+  type: appActions.SET_ROOM_FORM_VISIBILITY,
+  showRoomForm: visibility
 });
 
 const addRoomSuccess = room => ({
@@ -61,6 +63,7 @@ export const addRoom = _room => {
   return dispatch =>
     api.addRoom(room).then(response => {
       dispatch(setRoom(response));
+      dispatch(setRoomFormVisibility(false));
       addRoomSuccess(response);
     });
 };

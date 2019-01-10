@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { withStyles } from '@material-ui/core/styles';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import GeoLocation from '../../resources/Geolocation';
-import { addRoom, toogleRoomForm } from '../../actions';
+import { addRoom, setRoomFormVisibility } from '../../actions';
 
 const Header = styled.div`
   display: flex;
@@ -99,12 +99,10 @@ class RoomFormContainer extends Component {
           longitude: pos.coords.longitude
         }
       });
-
-      this.props.toogleRoomForm();
     });
   }
   handleExitClick(event) {
-    this.props.toogleRoomForm();
+    this.props.setRoomFormVisibility(false);
   }
   render() {
     return (
@@ -120,7 +118,7 @@ class RoomFormContainer extends Component {
 }
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ toogleRoomForm, addRoom }, dispatch);
+  bindActionCreators({ setRoomFormVisibility, addRoom }, dispatch);
 
 export default connect(
   null,
