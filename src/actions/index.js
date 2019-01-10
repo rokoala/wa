@@ -58,7 +58,11 @@ export const addRoom = _room => {
     location: _room.location
   };
 
-  return api.addRoom(room).then(response => addRoomSuccess(response));
+  return dispatch =>
+    api.addRoom(room).then(response => {
+      dispatch(setRoom(response));
+      addRoomSuccess(response);
+    });
 };
 
 export const receivedRooms = rooms => ({

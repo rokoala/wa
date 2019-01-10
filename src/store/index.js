@@ -3,6 +3,7 @@ import { rootReducer } from '../reducers';
 import { applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import promise from 'redux-promise';
+import thunk from 'redux-thunk';
 
 const persistedState = {
   app: {
@@ -18,7 +19,7 @@ const persistedState = {
 };
 
 const configureStore = () => {
-  const middlewares = [promise];
+  const middlewares = [promise, thunk];
 
   if (process.env.NODE_ENV !== 'production') {
     middlewares.push(createLogger());
