@@ -24,7 +24,7 @@ const RoomManager = {
     });
   },
   addMessage({ text, roomId }, userId, username) {
-    const message = { text, userId, roomId, username };
+    const message = { text, userId, roomId, username, date: new Date() };
     rooms.filter(room => {
       if (room.id.toString() === roomId) {
         room.lastMessages.push(message);

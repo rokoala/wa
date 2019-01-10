@@ -18,7 +18,9 @@ import {
 } from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
 
 const StyledListItem = withStyles({
   primary: {
@@ -32,6 +34,21 @@ const ListItemChat = withStyles({
     'letter-spacing': '1px'
   }
 })(ListItemText);
+
+const createListItem = ({ name, lastMessages }) =>
+  lastMessages.length > 0 ? (
+    <React.Fragment>
+      <StyledListItem
+        primary={name}
+        secondary={lastMessages[lastMessages.length - 1].text}
+      />
+      <Typography style={{ color: 'gray' }}>
+        {moment(lastMessages[lastMessages.length - 1].date).format('HH:mm')}
+      </Typography>
+    </React.Fragment>
+  ) : (
+    <StyledListItem primary={name} />
+  );
 
 const RoomList = props => {
   const { rooms, onItemClick, onAddRoomItemClick } = props;
@@ -52,9 +69,7 @@ const RoomList = props => {
       <Divider />
       <List>
         {rooms.map(room => {
-          const lastMessage = room.lastMessages[0]
-            ? room.lastMessages[room.lastMessages.length - 1].text
-            : '';
+          const itemTextDate = createListItem(room);
 
           return (
             <ListItem
@@ -67,7 +82,7 @@ const RoomList = props => {
               {/* <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar> */}
-              <StyledListItem primary={room.name} secondary={lastMessage} />
+              {itemTextDate}
             </ListItem>
           );
         })}
