@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RoomForm from './RoomForm';
-import RoomList from './RoomList';
+import SubscribedRoomList from './SubscribedRoomList';
 import styled from 'styled-components';
 
 const LobbyWrapper = styled.div`
@@ -16,7 +16,7 @@ class Lobby extends Component {
     const { showRoomForm } = this.props;
     return (
       <LobbyWrapper className={this.props.className}>
-        {showRoomForm ? <RoomForm /> : <RoomList />}
+        {showRoomForm ? <RoomForm /> : <SubscribedRoomList />}
       </LobbyWrapper>
     );
   }

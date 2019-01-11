@@ -57,7 +57,7 @@ const createListItem = ({ name, lastMessages }) =>
     <StyledListItem primary={name} />
   );
 
-const RoomList = props => {
+const SubscribedRoomList = props => {
   const { rooms, onItemClick, onAddRoomItemClick, showRoomList } = props;
   return (
     <React.Fragment>
@@ -106,7 +106,7 @@ const RoomList = props => {
   );
 };
 
-RoomList.propTypes = {
+SubscribedRoomList.propTypes = {
   onAddRoomClick: PropTypes.func
 };
 
@@ -131,7 +131,7 @@ class RoomListContainer extends Component {
   }
   render() {
     return (
-      <RoomList
+      <SubscribedRoomList
         onAddRoomItemClick={this.handleAddRoomItemClick}
         onItemClick={this.handleJoinRoomItemClick}
         {...this.props}
