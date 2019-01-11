@@ -15,6 +15,8 @@ const server = http.createServer(app);
 // creates a socket using the server instance
 const io = socketIO(server);
 
+app.use(express.static(__dirname + '/../public/'));
+
 Authenticator(io, {
   authenticate: (client, { username, password }, callback) => {
     const user = ClientManager.login(username, password);
