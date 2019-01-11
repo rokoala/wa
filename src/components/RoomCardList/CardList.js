@@ -16,7 +16,7 @@ import FaceRounded from '@material-ui/icons/FaceRounded';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 import { connect } from 'react-redux';
-import { bindActionCreators } from '../../../../../Library/Caches/typescript/3.2/node_modules/redux';
+import { bindActionCreators } from 'redux';
 
 class CardList extends PureComponent {
   constructor(props) {
