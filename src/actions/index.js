@@ -75,3 +75,7 @@ export const receivedRooms = rooms => ({
 
 export const getRoomsByLocation = location =>
   api.fetchRoomsByLocation(location).then(response => receivedRooms(response));
+
+export const showRoomList = () => ({
+  type: appActions.SHOW_ROOM_LIST
+});

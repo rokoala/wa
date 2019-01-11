@@ -5,6 +5,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Button,
   ListItemAvatar,
   Avatar
 } from '@material-ui/core';
@@ -14,9 +15,11 @@ import {
   setRoomFormVisibility,
   setRoom,
   receivedRooms,
-  getRoomsByLocation
+  getRoomsByLocation,
+  showRoomList
 } from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
+import MapSharp from '@material-ui/icons/MapSharp';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
@@ -55,7 +58,7 @@ const createListItem = ({ name, lastMessages }) =>
   );
 
 const RoomList = props => {
-  const { rooms, onItemClick, onAddRoomItemClick } = props;
+  const { rooms, onItemClick, onAddRoomItemClick, showRoomList } = props;
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
@@ -91,6 +94,14 @@ const RoomList = props => {
           );
         })}
       </List>
+      <Divider />
+      <Button
+        onClick={() => {
+          showRoomList();
+        }}
+      >
+        <MapSharp style={{ fontSize: 50 }} />
+      </Button>
     </React.Fragment>
   );
 };
@@ -140,7 +151,8 @@ const mapDispatchToProps = dispatch =>
       setRoomFormVisibility,
       setRoom,
       receivedRooms,
-      getRoomsByLocation
+      getRoomsByLocation,
+      showRoomList
     },
     dispatch
   );

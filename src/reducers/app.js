@@ -41,6 +41,11 @@ export const app = (state = {}, action) => {
       return {
         ...state
       };
+    case appActions.SHOW_ROOM_LIST:
+      return {
+        ...state,
+        room: null
+      };
     default:
       return state;
   }
