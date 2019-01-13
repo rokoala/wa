@@ -62,9 +62,10 @@ export const addRoom = _room => {
 
   return dispatch =>
     api.addRoom(room).then(response => {
+      dispatch(addRoomSuccess(response));
       dispatch(setRoom(response));
+      dispatch(subscribeRoom(response.id));
       dispatch(setRoomFormVisibility(false));
-      addRoomSuccess(response);
     });
 };
 
@@ -79,3 +80,21 @@ export const getRoomsByLocation = location =>
 export const showRoomList = () => ({
   type: appActions.SHOW_ROOM_LIST
 });
+
+const receivedSubscribedRooms = subscribedRooms => ({
+  type: appActions.LOAD_SUBSCRIBE_ROOMS,
+  subscribedRooms
+});
+
+export const getSubscribedRooms = () =>
+  api
+    .fetchSubscribedRooms()
+    .then(response => receivedSubscribedRooms(response));
+
+const successSubscribeRoom = subscribedRooms => ({
+  type: appActions.SUBSCRIBE_ROOM,
+  subscribedRooms
+});
+
+export const subscribeRoom = roomId =>
+  api.subscribeRoom(roomId).then(response => successSubscribeRoom(response));

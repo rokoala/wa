@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { setRoom } from '../../actions';
+import { setRoom, getRoomsByLocation } from '../../actions';
 import {
   Card,
   CardActionArea,
@@ -21,6 +21,7 @@ import { bindActionCreators } from 'redux';
 class CardList extends PureComponent {
   constructor(props) {
     super(props);
+    this.props.getRoomsByLocation();
   }
   render() {
     // const rooms = [
@@ -140,7 +141,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setRoom
+      setRoom,
+      getRoomsByLocation
     },
     dispatch
   );

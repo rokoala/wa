@@ -1,4 +1,4 @@
-let rooms = [];
+var rooms = [];
 
 const RoomManager = {
   addRoom: room => {
@@ -44,6 +44,9 @@ const RoomManager = {
   },
   getRoomsByLocation: location => {
     return rooms;
+  },
+  getRoomById: id => {
+    return rooms.filter(room => room.id === id)[0];
   }
 };
 

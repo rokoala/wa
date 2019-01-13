@@ -1,4 +1,5 @@
 const RoomManager = require('./RoomManager');
+const ClientManager = require('./ClientManager');
 
 const SocketHandler = (io, socket, { id, username }) => {
   const userId = id;
@@ -37,7 +38,16 @@ const SocketHandler = (io, socket, { id, username }) => {
   });
 
   socket.on('socket:onlineUsers', callback => {
-    callback(null, clientManager.onlineUsers());
+    callback(null, ClientManager.onlineUsers());
+  });
+
+  socket.on('subscribeRoom', (roomId, callback) => {
+    const subscribedRooms = ClientManager.subscribeRoom(id, roomId);
+    callback(null, subscribedRooms);
+  });
+
+  socket.on('getSubscribedRooms', callback => {
+    callback(null, ClientManager.getSubscribedRooms(id));
   });
 
   socket.on('error', function(err) {

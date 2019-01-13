@@ -46,6 +46,16 @@ export const app = (state = {}, action) => {
         ...state,
         room: null
       };
+    case appActions.LOAD_SUBSCRIBE_ROOMS:
+      return {
+        ...state,
+        subscribedRooms: action.subscribedRooms
+      };
+    case appActions.SUBSCRIBE_ROOM:
+      return {
+        ...state,
+        subscribedRooms: action.subscribedRooms
+      };
     default:
       return state;
   }

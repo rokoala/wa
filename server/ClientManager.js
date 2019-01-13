@@ -1,12 +1,30 @@
-const Users = {
-  joao: {
+const RoomManager = require('./RoomManager');
+
+const Users = [
+  {
     id: '1',
-    username: 'joao'
+    username: 'joao',
+    subscribedRooms: []
   },
-  maria: {
+  {
     id: '2',
-    username: 'maria'
+    username: 'maria',
+    subscribedRooms: []
   }
+];
+
+const getUserByUsername = username => {
+  return Users.filter(user => user.username === username)[0];
+};
+
+const getUserById = userId => {
+  return Users.filter(user => user.id === userId)[0];
+};
+
+const getSubscribedRooms = subscribedRoomsId => {
+  return subscribedRoomsId.map(subscribedRoom =>
+    RoomManager.getRoomById(subscribedRoom)
+  );
 };
 
 const ClientManager = {
@@ -14,7 +32,16 @@ const ClientManager = {
     //implements
   },
   login(username, password) {
-    return Users[username];
+    return getUserByUsername(username);
+  },
+  subscribeRoom(userId, roomId) {
+    const user = getUserById(userId);
+    user.subscribedRooms.push(roomId);
+    return getSubscribedRooms(user.subscribedRooms);
+  },
+  getSubscribedRooms(userId) {
+    const user = getUserById(userId);
+    return getSubscribedRooms(user.subscribedRooms);
   }
 };
 

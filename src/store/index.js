@@ -13,7 +13,8 @@ const persistedState = {
     room: null,
     showRoomForm: false,
     socketClient: null,
-    location: null
+    location: null,
+    subscribedRooms: []
   },
   rooms: []
 };

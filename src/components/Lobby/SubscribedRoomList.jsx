@@ -15,7 +15,7 @@ import {
   setRoomFormVisibility,
   setRoom,
   receivedRooms,
-  getRoomsByLocation,
+  getSubscribedRooms,
   showRoomList
 } from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
@@ -58,7 +58,13 @@ const createListItem = ({ name, lastMessages }) =>
   );
 
 const SubscribedRoomList = props => {
-  const { rooms, onItemClick, onAddRoomItemClick, showRoomList } = props;
+  const {
+    subscribedRooms,
+    onItemClick,
+    onAddRoomItemClick,
+    showRoomList
+  } = props;
+
   return (
     <React.Fragment>
       <List style={{ padding: 0 }}>
@@ -75,7 +81,7 @@ const SubscribedRoomList = props => {
       </List>
       <Divider />
       <List>
-        {rooms.map(room => {
+        {subscribedRooms.map(room => {
           const itemTextDate = createListItem(room);
 
           return (
@@ -117,11 +123,11 @@ class RoomListContainer extends Component {
     this.handleJoinRoomItemClick = this.handleJoinRoomItemClick.bind(this);
   }
   componentWillMount() {
-    this.props.socketClient.on('roomUpdated', this.onRoomListUpdated);
-    this.props.getRoomsByLocation();
+    // this.props.socketClient.on('roomUpdated', this.onRoomListUpdated);
+    this.props.getSubscribedRooms();
   }
   onRoomListUpdated(rooms) {
-    this.props.receivedRooms(rooms);
+    // this.props.receivedRooms(rooms);
   }
   handleAddRoomItemClick() {
     this.props.setRoomFormVisibility(true);
@@ -141,7 +147,7 @@ class RoomListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  rooms: state.rooms,
+  subscribedRooms: state.app.subscribedRooms,
   socketClient: state.app.socketClient
 });
 
@@ -151,7 +157,7 @@ const mapDispatchToProps = dispatch =>
       setRoomFormVisibility,
       setRoom,
       receivedRooms,
-      getRoomsByLocation,
+      getSubscribedRooms,
       showRoomList
     },
     dispatch

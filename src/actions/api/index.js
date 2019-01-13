@@ -42,3 +42,9 @@ export const setRoom = newRoom => {
 };
 
 export const addRoom = room => socketClientEmit('addRoom', room);
+
+export const fetchSubscribedRooms = () =>
+  socketClientEmit('getSubscribedRooms');
+
+export const subscribeRoom = roomId =>
+  socketClientEmit('subscribeRoom', roomId);
