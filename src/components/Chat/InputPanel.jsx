@@ -44,7 +44,6 @@ class InputPanelContainer extends Component {
       message: ''
     };
 
-    this.socketClient = this.props.socketClient;
     this.messageInputRef = this.messageInputRef.bind(this);
     this.handleTextInputChange = this.handleTextInputChange.bind(this);
     this.onSendMessage = this.onSendMessage.bind(this);
@@ -84,8 +83,7 @@ class InputPanelContainer extends Component {
 
 const mapStateToProps = state => ({
   username: state.app.username,
-  roomId: state.app.room.id,
-  socketClient: state.app.socketClient
+  roomId: state.app.room.id
 });
 
 const mapDispatchToProps = dispatch =>

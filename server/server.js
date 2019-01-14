@@ -15,6 +15,8 @@ const server = http.createServer(app);
 // creates a socket using the server instance
 const io = socketIO(server);
 
+// create static directory to server images
+// todo: get images from other way
 app.use(express.static(__dirname + '/../public/'));
 
 Authenticator(io, {

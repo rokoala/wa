@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import {
-  TextField,
-  Button,
-  Typography,
-  FormHelperText
-} from '@material-ui/core';
+import { TextField, Button, Typography } from '@material-ui/core';
 import { appLogin } from '../../actions';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux';
@@ -43,10 +38,6 @@ class UserLogin extends Component {
   handleChangeInputPassword(evt) {
     this.setState({ password: evt.currentTarget.value });
   }
-  onLogin(evt) {
-    evt.preventDefault();
-    this.props.appLogin(this.state.username, 'FOOOOO');
-  }
   handleShowPasswordInput(evt) {
     evt.preventDefault();
     if (this.state.username !== '') {
@@ -60,6 +51,10 @@ class UserLogin extends Component {
     this.setState({
       showPasswordField: false
     });
+  }
+  onLogin(evt) {
+    evt.preventDefault();
+    this.props.appLogin(this.state.username, this.state.password);
   }
   render() {
     return (

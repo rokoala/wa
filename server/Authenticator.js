@@ -41,6 +41,7 @@ const Authenticator = (io, options) => {
     });
 
     socket.on('disconnect', function() {
+      console.log('disconnected');
       return config.disconnect ? config.disconnect(socket) : null;
     });
 

@@ -1,29 +1,32 @@
 import { Store } from '../../store';
+import SocketClient from 'socket.io-client';
+import { appActions } from '../actionTypes';
 
-const socketClientEmit = (name, ...param) => {
-  const { socketClient } = Store.getState().app;
-  return new Promise((resolve, reject) => {
-    socketClient.emit(name, ...param, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
+class SocketApi {
+  constructor(server) {
+    console.log(server);
+    this.socketClient = new SocketClient(server);
+  }
+  registerMessageListener() {
+    this.socketClient.on('waMessage', message => {
+      Store.dispatch({
+        type: appActions.ADD_MESSAGE,
+        message
+      });
     });
-  });
-};
+  }
+  unregisterMessageListener() {
+    //todo: on logout add this listener
+    this.socketClient.off('waMessage');
+  }
+  socketIOEmit(name, ...args) {
+    return new Promise((resolve, reject) => {
+      this.socketClient.emit(name, ...args, (err, data) => {
+        if (err) reject(err);
+        resolve(data);
+      });
+    });
+  }
+}
 
-export const login = (username, password) =>
-  socketClientEmit('login', username, password);
-
-//TODO: Use location as paramater
-export const fetchRoomsByLocation = location =>
-  socketClientEmit('getRooms', location);
-
-export const addChatMessage = message =>
-  socketClientEmit('addMessage', message);
-
-export const addRoom = room => socketClientEmit('addRoom', room);
-
-export const fetchSubscribedRooms = () =>
-  socketClientEmit('getSubscribedRooms');
-
-export const subscribeRoom = roomId =>
-  socketClientEmit('subscribeRoom', roomId);
+export default SocketApi;

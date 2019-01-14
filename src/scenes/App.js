@@ -6,14 +6,12 @@ import { bindActionCreators } from 'redux';
 import Chat from '../components/Chat';
 import Lobby from '../components/Lobby';
 import Login from '../components/Login';
-import AppWrapper from './AppWrapper';
 import Geolocation from '../resources/Geolocation';
-import { setLocation, setSocketClient } from '../actions';
-import SocketClient from 'socket.io-client';
+import { setLocation } from '../actions';
 import styled from 'styled-components';
 
 const StyledLobby = styled(Lobby)`
-  // flex: 0 1 400px;
+  //flex: 0 1 400px;
   width: 400px;
   border-right: 1px solid lightgray;
 `;
@@ -35,18 +33,14 @@ class App extends Component {
       }
     );
   }
-  componentWillMount() {
-    const { setSocketClient } = this.props;
-    setSocketClient(new SocketClient('http://localhost:8000'));
-  }
   render() {
     const { chatEnabled, location } = this.props;
     //TODO: add location
     return chatEnabled ? (
-      <AppWrapper>
+      <div style={{ display: 'flex', width: '100%', height: '100%' }}>
         <StyledLobby />
         <StyledChat />
-      </AppWrapper>
+      </div>
     ) : (
       <Login />
     );
@@ -59,7 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setLocation, setSocketClient }, dispatch);
+  bindActionCreators({ setLocation }, dispatch);
 
 export default connect(
   mapStateToProps,

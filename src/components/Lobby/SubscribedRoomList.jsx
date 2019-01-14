@@ -122,13 +122,6 @@ class RoomListContainer extends Component {
     this.handleJoinRoomItemClick = this.handleJoinRoomItemClick.bind(this);
     this.props.getSubscribedRooms();
   }
-  componentWillMount() {
-    // this.props.socketClient.on('roomUpdated', this.onRoomListUpdated);
-    //this.props.getSubscribedRooms();
-  }
-  onRoomListUpdated(rooms) {
-    // this.props.receivedRooms(rooms);
-  }
   handleAddRoomItemClick() {
     this.props.setRoomFormVisibility(true);
   }
@@ -147,8 +140,7 @@ class RoomListContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  subscribedRooms: state.app.subscribedRooms,
-  socketClient: state.app.socketClient
+  subscribedRooms: state.app.subscribedRooms
 });
 
 const mapDispatchToProps = dispatch =>

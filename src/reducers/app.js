@@ -1,4 +1,4 @@
-import { appActions, roomActions } from '../actions/actionTypes';
+import { appActions } from '../actions/actionTypes';
 
 const addLastMessageCurrentRoom = (room, message) => {
   const _room = Object.assign({}, room);
@@ -50,7 +50,7 @@ export const app = (state = {}, action) => {
         ...state,
         showRoomForm: action.showRoomForm
       };
-    case roomActions.ADD_MESSAGE_CONFIRMATION:
+    case appActions.ADD_MESSAGE:
       const _room = addLastMessageCurrentRoom(state.room, action.message);
 
       const subscribedRooms = addMessageSubscribedRoom(

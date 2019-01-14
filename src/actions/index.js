@@ -1,24 +1,31 @@
 import { appActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
-import * as api from './api';
+import SocketClientApi from './api';
 import { Store } from '../store';
 
-const appLoginSuccess = user => ({
-  type: appActions.LOGIN,
-  user
-});
+const api = new SocketClientApi('http://localhost:8000');
 
-export const appLogin = (username, password) =>
-  api.login(username, password).then(response => appLoginSuccess(response));
+const appLoginSuccess = user => {
+  api.registerMessageListener();
+  return {
+    type: appActions.LOGIN,
+    user
+  };
+};
+
+export const appLogin = (...args) =>
+  api
+    .socketIOEmit('login', ...args)
+    .then(response => appLoginSuccess(response));
 
 const addMessageSuccessConfirmation = message => ({
-  type: roomActions.ADD_MESSAGE_CONFIRMATION,
+  type: appActions.ADD_MESSAGE,
   message
 });
 
 export const sendMessage = message =>
   api
-    .addChatMessage(message)
+    .socketIOEmit('addMessage', message)
     .then(response => addMessageSuccessConfirmation(response));
 
 export const setSocketClient = socketClient => ({
@@ -60,7 +67,7 @@ export const addRoom = _room => {
   };
 
   return dispatch =>
-    api.addRoom(room).then(response => {
+    api.socketIOEmit('addRoom', room).then(response => {
       dispatch(addRoomSuccess(response));
       dispatch(setRoom(response));
       dispatch(setRoomFormVisibility(false));
@@ -73,7 +80,9 @@ export const receivedRooms = rooms => ({
 });
 
 export const getRoomsByLocation = location =>
-  api.fetchRoomsByLocation(location).then(response => receivedRooms(response));
+  api
+    .socketIOEmit('getRoomsByLocation', location)
+    .then(response => receivedRooms(response));
 
 export const showRoomList = () => ({
   type: appActions.SHOW_ROOM_LIST
@@ -86,7 +95,7 @@ const receivedSubscribedRooms = subscribedRooms => ({
 
 export const getSubscribedRooms = () =>
   api
-    .fetchSubscribedRooms()
+    .socketIOEmit('getSubscribedRooms')
     .then(response => receivedSubscribedRooms(response));
 
 const successSubscribeRoom = subscribedRooms => ({
@@ -100,6 +109,8 @@ export const subscribeRoom = roomId => {
   const alreadySubscribed = subscribedRooms.filter(room => room.id === roomId);
 
   return alreadySubscribed.length === 0
-    ? api.subscribeRoom(roomId).then(response => successSubscribeRoom(response))
+    ? api
+        .socketIOEmit('subscribeRoom', roomId)
+        .then(response => successSubscribeRoom(response))
     : { type: 'DEFAULT' };
 };
