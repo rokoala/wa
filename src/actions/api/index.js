@@ -20,27 +20,6 @@ export const fetchRoomsByLocation = location =>
 export const addChatMessage = message =>
   socketClientEmit('addMessage', message);
 
-export const setRoom = newRoom => {
-  const { socketClient, room } = Store.getState().app;
-
-  const joinRoom = (room, resolve, reject) => {
-    socketClient.emit('joinRoom', room, (err, data) => {
-      if (err) reject(err);
-      resolve(data);
-    });
-  };
-
-  return new Promise((resolve, reject) => {
-    if (room)
-      socketClient.emit('leaveRoom', room.id, err => {
-        if (err) reject(err);
-
-        joinRoom(newRoom, resolve, reject);
-      });
-    else joinRoom(newRoom, resolve, reject);
-  });
-};
-
 export const addRoom = room => socketClientEmit('addRoom', room);
 
 export const fetchSubscribedRooms = () =>

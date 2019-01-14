@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   setRoomFormVisibility,
   setRoom,
-  receivedRooms,
   getSubscribedRooms,
   showRoomList
 } from '../../actions';
@@ -121,10 +120,11 @@ class RoomListContainer extends Component {
     super(props);
     this.handleAddRoomItemClick = this.handleAddRoomItemClick.bind(this);
     this.handleJoinRoomItemClick = this.handleJoinRoomItemClick.bind(this);
+    this.props.getSubscribedRooms();
   }
   componentWillMount() {
     // this.props.socketClient.on('roomUpdated', this.onRoomListUpdated);
-    this.props.getSubscribedRooms();
+    //this.props.getSubscribedRooms();
   }
   onRoomListUpdated(rooms) {
     // this.props.receivedRooms(rooms);
@@ -156,7 +156,6 @@ const mapDispatchToProps = dispatch =>
     {
       setRoomFormVisibility,
       setRoom,
-      receivedRooms,
       getSubscribedRooms,
       showRoomList
     },

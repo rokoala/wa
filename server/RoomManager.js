@@ -15,13 +15,18 @@ const RoomManager = {
     return _room;
   },
   subscribeUser(userId, roomId) {
-    rooms.filter(room => {
+    let success = false;
+    rooms.forEach(room => {
       if (room.id === roomId) {
-        if (room.subscribers.indexOf(userId.toString()) < 0)
+        if (room.subscribers.indexOf(userId.toString()) < 0) {
           room.subscribers.push(userId);
-        else console.warn('user already subscribed');
+          success = true;
+        }
       }
     });
+    if (!success) console.warn('User already subscribed');
+
+    return success;
   },
   addMessage({ text, roomId }, userId, username) {
     const message = { text, userId, roomId, username, date: new Date() };

@@ -7,14 +7,14 @@ export const rooms = (state = [], action) => {
     case roomActions.LOAD_ROOMS_BY_LOCATION:
       return action.rooms;
 
-    case roomActions.ADD_MESSAGE_CONFIRMATION:
-      let rooms = state;
-      return rooms.map(room => {
-        if (room.id === action.message.roomId)
-          room.lastMessages = [...room.lastMessages, action.message];
+    // case roomActions.ADD_MESSAGE_CONFIRMATION:
+    //   let rooms = state;
+    //   return rooms.map(room => {
+    //     if (room.id === action.message.roomId)
+    //       room.lastMessages = [...room.lastMessages, action.message];
 
-        return room;
-      });
+    //     return room;
+    //   });
     default:
       return state;
   }

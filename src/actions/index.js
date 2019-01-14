@@ -1,7 +1,7 @@
 import { appActions, roomActions } from './actionTypes';
 import { uid } from 'react-uid';
 import * as api from './api';
-import { app } from '../reducers/app';
+import { Store } from '../store';
 
 const appLoginSuccess = user => ({
   type: appActions.LOGIN,
@@ -35,13 +35,12 @@ export const setLocation = location => ({
   location
 });
 
-const setRoomSuccess = room => ({
-  type: appActions.SET_ROOM,
-  room
-});
-
-export const setRoom = room =>
-  api.setRoom(room).then(response => setRoomSuccess(response));
+export const setRoom = room => {
+  return dispatch => {
+    dispatch({ type: appActions.SET_ROOM, room });
+    dispatch(subscribeRoom(room.id));
+  };
+};
 
 export const setRoomFormVisibility = visibility => ({
   type: appActions.SET_ROOM_FORM_VISIBILITY,
@@ -64,7 +63,6 @@ export const addRoom = _room => {
     api.addRoom(room).then(response => {
       dispatch(addRoomSuccess(response));
       dispatch(setRoom(response));
-      dispatch(subscribeRoom(response.id));
       dispatch(setRoomFormVisibility(false));
     });
 };
@@ -96,5 +94,12 @@ const successSubscribeRoom = subscribedRooms => ({
   subscribedRooms
 });
 
-export const subscribeRoom = roomId =>
-  api.subscribeRoom(roomId).then(response => successSubscribeRoom(response));
+export const subscribeRoom = roomId => {
+  const { subscribedRooms } = Store.getState().app;
+
+  const alreadySubscribed = subscribedRooms.filter(room => room.id === roomId);
+
+  return alreadySubscribed.length === 0
+    ? api.subscribeRoom(roomId).then(response => successSubscribeRoom(response))
+    : { type: 'DEFAULT' };
+};

@@ -5,10 +5,10 @@ class SocketApi {
     this.socketClient = socketClient;
   }
   regiterMessageListener() {
-    this.socketClient.on('message', this.onMessageReceived);
+    this.socketClient.on('waMessage', this.onMessageReceived);
   }
   unregisterMessageListener() {
-    this.socketClient.off('message');
+    this.socketClient.off('waMessage');
   }
   onMessageReceived(message) {
     Store.dispatch({

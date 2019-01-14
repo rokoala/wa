@@ -1,5 +1,22 @@
 import { appActions, roomActions } from '../actions/actionTypes';
 
+const addLastMessageCurrentRoom = (room, message) => {
+  const _room = Object.assign({}, room);
+  if (_room.id.toString() === message.roomId)
+    _room.lastMessages = [..._room.lastMessages, message];
+  return _room;
+};
+
+const addMessageSubscribedRoom = (subscribedRooms, message) => {
+  const _room = [...subscribedRooms];
+  _room.forEach(room => {
+    if (room.id === message.roomId) {
+      room.lastMessages = [...room.lastMessages, message];
+    }
+  });
+  return _room;
+};
+
 export const app = (state = {}, action) => {
   switch (action.type) {
     case appActions.LOGIN:
@@ -34,12 +51,17 @@ export const app = (state = {}, action) => {
         showRoomForm: action.showRoomForm
       };
     case roomActions.ADD_MESSAGE_CONFIRMATION:
-      if (state.room.id.toString() === action.message.roomId) {
-        state.room.lastMessages = [...state.room.lastMessages, action.message];
-      }
+      const _room = addLastMessageCurrentRoom(state.room, action.message);
+
+      const subscribedRooms = addMessageSubscribedRoom(
+        state.subscribedRooms,
+        action.message
+      );
 
       return {
-        ...state
+        ...state,
+        room: _room,
+        subscribedRooms: subscribedRooms
       };
     case appActions.SHOW_ROOM_LIST:
       return {
