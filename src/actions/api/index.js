@@ -4,7 +4,6 @@ import { appActions } from '../actionTypes';
 
 class SocketApi {
   constructor(server) {
-    console.log(server);
     this.socketClient = new SocketClient(server);
   }
   registerMessageListener() {

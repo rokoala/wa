@@ -49,6 +49,15 @@ export const setRoom = room => {
   };
 };
 
+export const getAndSetRoom = room => {
+  return dispatch => {
+    return api.socketIOEmit('getRoomById', room.id).then(response => {
+      dispatch({ type: appActions.SET_ROOM, response });
+      dispatch(subscribeRoom(response));
+    });
+  };
+};
+
 export const setRoomFormVisibility = visibility => ({
   type: appActions.SET_ROOM_FORM_VISIBILITY,
   showRoomForm: visibility

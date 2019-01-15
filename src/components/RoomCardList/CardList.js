@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { setRoom, getRoomsByLocation } from '../../actions';
+import { getAndSetRoom, getRoomsByLocation } from '../../actions';
 import {
   Card,
   CardActionArea,
@@ -23,33 +23,8 @@ class CardList extends PureComponent {
     super(props);
     this.props.getRoomsByLocation();
   }
-  componentWillUpdate() {
-    this.props.getRoomsByLocation();
-  }
+  handleClickSubscribe() {}
   render() {
-    // const rooms = [
-    //   {
-    //     id: '1',
-    //     name: 'Shopping Patio Paulista',
-    //     imagePath: 'shopping-patio-paulista.jpg'
-    //   },
-    //   {
-    //     id: '2',
-    //     name: 'Praça São João',
-    //     imagePath: 'room-1.jpg'
-    //   },
-    //   {
-    //     id: '3',
-    //     name: 'McDonalds Paulista',
-    //     imagePath: 'mcdonalds.png'
-    //   },
-    //   {
-    //     id: '4',
-    //     name: 'McDonalds Sao Joaquim',
-    //     imagePath: 'mcdonalds.png'
-    //   }
-    // ];
-
     const { rooms } = this.props;
 
     return rooms ? (
@@ -108,12 +83,14 @@ class CardList extends PureComponent {
           />
           <CardActionArea
             onClick={() => {
-              this.props.setRoom(room);
+              this.props.getAndSetRoom(room);
             }}
           >
             <CardMedia
               style={{ height: 305, filter: 'opacity(.85)' }}
-              image={'http://localhost:8000/images/rooms/' + room.imagePath}
+              image={
+                'http://localhost:8000/images/rooms/shopping-patio-paulista.jpg'
+              }
             />
             <CardContent>
               <Typography gutterBottom variant="h6" component="h3">
@@ -125,7 +102,10 @@ class CardList extends PureComponent {
             style={{ display: 'flex', justifyContent: 'flex-end' }}
             disableActionSpacing
           >
-            <IconButton aria-label="Add to favorites">
+            <IconButton
+              // onClick={this.handleClickSubscribe}
+              aria-label="Add to favorites"
+            >
               <FavoriteIcon style={{ color: '#ff3838', fontSize: 35 }} />
             </IconButton>
           </CardActions>
@@ -144,7 +124,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setRoom,
+      getAndSetRoom,
       getRoomsByLocation
     },
     dispatch
