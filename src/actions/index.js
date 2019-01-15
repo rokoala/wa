@@ -49,17 +49,14 @@ export const setRoom = room => {
   };
 };
 
-export const getAndSetRoom = room => {
-  return dispatch => {
-    return api
-      .socketIOEmit('getRoomById', room.id)
-      .then(response => {
-        dispatch({ type: appActions.SET_ROOM, room: response });
-        dispatch(subscribeRoom(response.id));
-      })
-      .catch(err => console.error(err));
-  };
-};
+export const getAndSetRoom = room => dispatch =>
+  api
+    .socketIOEmit('getRoomById', room.id)
+    .then(response => {
+      dispatch({ type: appActions.SET_ROOM, room: response });
+      dispatch(subscribeRoom(response.id));
+    })
+    .catch(err => console.error(err));
 
 export const setRoomFormVisibility = visibility => ({
   type: appActions.SET_ROOM_FORM_VISIBILITY,
