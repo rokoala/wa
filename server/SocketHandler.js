@@ -4,6 +4,11 @@ const ClientManager = require('./ClientManager');
 const SocketHandler = (io, socket, { id, username }) => {
   const userId = id;
 
+  ClientManager.getSubscribedRooms(userId).forEach(room => {
+    console.log(room);
+    socket.join(room.id);
+  });
+
   // Check if the user is logged
   socket.use((packet, next) => {
     if (userId) return next();
@@ -26,14 +31,17 @@ const SocketHandler = (io, socket, { id, username }) => {
   });
 
   socket.on('getSubscribedRooms', callback => {
-    callback(null, ClientManager.getSubscribedRooms(userId));
+    const rooms = ClientManager.getSubscribedRooms(userId);
+    callback(null, rooms);
   });
 
-  socket.on('leaveRoom', (roomId, callback) => {
-    socket.leave(roomId, () => {
-      callback(null, 'left the room');
-    });
-  });
+  // socket.on('unsubscribeRoom', (roomId, callback) => {
+  //   RoomManager.unsubscribeUser(userId, roomId);
+  //   ClientManager.unsubscriberRoom(userId, roomId);
+  //   socket.leave(roomId, () => {
+  //     callback(null, 'left the room');
+  //   });
+  // });
 
   socket.on('subscribeRoom', (roomId, callback) => {
     if (RoomManager.subscribeUser(userId, roomId)) socket.join(roomId);

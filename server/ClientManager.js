@@ -21,7 +21,7 @@ const getUserById = userId => {
   return Users.filter(user => user.id === userId)[0];
 };
 
-const getSubscribedRooms = subscribedRoomsId => {
+const getRoomsById = subscribedRoomsId => {
   return subscribedRoomsId.map(subscribedRoom =>
     RoomManager.getRoomById(subscribedRoom)
   );
@@ -37,11 +37,15 @@ const ClientManager = {
   subscribeRoom(userId, roomId) {
     const user = getUserById(userId);
     user.subscribedRooms.push(roomId);
-    return getSubscribedRooms(user.subscribedRooms);
+    return getRoomsById(user.subscribedRooms);
+  },
+  unsubscribeRoom(userId, roomId) {
+    getUserById(userId).subscribedRooms = user.subscribedRooms.filter(
+      subscribedRoom => (subscribedRoom !== roomId ? true : false)
+    );
   },
   getSubscribedRooms(userId) {
-    const user = getUserById(userId);
-    return getSubscribedRooms(user.subscribedRooms);
+    return getRoomsById(getUserById(userId).subscribedRooms);
   }
 };
 

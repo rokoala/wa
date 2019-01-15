@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import CardList from './CardList';
-import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core';
 
 class RoomCardList extends Component {
@@ -29,6 +28,4 @@ class RoomCardList extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
-
-export default connect(mapStateToProps)(RoomCardList);
+export default RoomCardList;

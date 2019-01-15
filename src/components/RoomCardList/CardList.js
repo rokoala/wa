@@ -23,6 +23,9 @@ class CardList extends PureComponent {
     super(props);
     this.props.getRoomsByLocation();
   }
+  componentWillUpdate() {
+    this.props.getRoomsByLocation();
+  }
   render() {
     // const rooms = [
     //   {

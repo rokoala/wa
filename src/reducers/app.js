@@ -51,7 +51,9 @@ export const app = (state = {}, action) => {
         showRoomForm: action.showRoomForm
       };
     case appActions.ADD_MESSAGE:
-      const _room = addLastMessageCurrentRoom(state.room, action.message);
+      const _room = state.room
+        ? addLastMessageCurrentRoom(state.room, action.message)
+        : null;
 
       const subscribedRooms = addMessageSubscribedRoom(
         state.subscribedRooms,

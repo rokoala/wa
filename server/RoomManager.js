@@ -28,6 +28,15 @@ const RoomManager = {
 
     return success;
   },
+  unsubscribeUser(userId, roomId) {
+    rooms.forEach(room => {
+      if (room.id === roomId) {
+        room.subscribers = room.subscribers.filter(subscriber =>
+          subscriber !== userId ? true : false
+        );
+      }
+    });
+  },
   addMessage({ text, roomId }, userId, username) {
     const message = { text, userId, roomId, username, date: new Date() };
     rooms.filter(room => {
