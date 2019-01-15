@@ -92,13 +92,17 @@ class RoomFormContainer extends Component {
   }
   handleAddBtnClick(event) {
     GeoLocation.getLocation().then(pos => {
-      this.props.addRoom({
-        name: this.state.name,
-        location: {
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude
-        }
-      });
+      this.props
+        .addRoom({
+          name: this.state.name,
+          location: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          }
+        })
+        .catch(err => {
+          console.error('Could not retrive geolocation' + err);
+        });
     });
   }
   handleExitClick(event) {

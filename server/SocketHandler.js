@@ -26,6 +26,10 @@ const SocketHandler = (io, socket, { id, username }) => {
     );
   });
 
+  socket.on('getRoomById', (roomId, callback) => {
+    callback(null, RoomManager.getRoomById(roomId));
+  });
+
   socket.on('getRoomsByLocation', (location, callback) => {
     callback(null, RoomManager.getRoomsByLocation(location));
   });

@@ -51,10 +51,13 @@ export const setRoom = room => {
 
 export const getAndSetRoom = room => {
   return dispatch => {
-    return api.socketIOEmit('getRoomById', room.id).then(response => {
-      dispatch({ type: appActions.SET_ROOM, response });
-      dispatch(subscribeRoom(response));
-    });
+    return api
+      .socketIOEmit('getRoomById', room.id)
+      .then(response => {
+        dispatch({ type: appActions.SET_ROOM, room: response });
+        dispatch(subscribeRoom(response.id));
+      })
+      .catch(err => console.error(err));
   };
 };
 
