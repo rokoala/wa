@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CardList from './CardList';
 import { Typography } from '@material-ui/core';
+import Map from '../Map';
 
 class RoomCardList extends Component {
   constructor(props) {
@@ -22,6 +23,9 @@ class RoomCardList extends Component {
           style={{ display: 'flex', flexWrap: 'wrap', flexDirection: 'row' }}
         >
           <CardList />
+        </div>
+        <div style={{ width: 600, height: 400 }}>
+          <Map />
         </div>
       </div>
     );
