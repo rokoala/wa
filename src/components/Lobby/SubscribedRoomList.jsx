@@ -11,13 +11,7 @@ import {
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  setRoomFormVisibility,
-  setRoom,
-  getSubscribedRooms
-} from '../../actions';
-import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
-import Divider from '@material-ui/core/Divider';
+import { setRoom, getSubscribedRooms } from '../../actions';
 import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
@@ -55,28 +49,10 @@ const createListItem = ({ name, lastMessages }) =>
   );
 
 const SubscribedRoomList = props => {
-  const {
-    subscribedRooms,
-    onItemClick,
-    onAddRoomItemClick,
-    showRoomList
-  } = props;
+  const { subscribedRooms, onItemClick } = props;
 
   return (
     <React.Fragment>
-      <List style={{ padding: 0 }}>
-        <ListItem
-          style={{ backgroundColor: 'white' }}
-          onClick={onAddRoomItemClick}
-          button
-        >
-          <ListItemIcon>
-            <ChatBubbleOutline fontSize="large" />
-          </ListItemIcon>
-          <ListItemChat primary="Criar Chat" />
-        </ListItem>
-      </List>
-      <Divider />
       <List>
         {subscribedRooms.map(room => {
           const itemTextDate = createListItem(room);
@@ -108,12 +84,8 @@ SubscribedRoomList.propTypes = {
 class RoomListContainer extends Component {
   constructor(props) {
     super(props);
-    this.handleAddRoomItemClick = this.handleAddRoomItemClick.bind(this);
     this.handleJoinRoomItemClick = this.handleJoinRoomItemClick.bind(this);
     this.props.getSubscribedRooms();
-  }
-  handleAddRoomItemClick() {
-    this.props.setRoomFormVisibility(true);
   }
   handleJoinRoomItemClick(room) {
     this.props.setRoom(room);
@@ -121,7 +93,6 @@ class RoomListContainer extends Component {
   render() {
     return (
       <SubscribedRoomList
-        onAddRoomItemClick={this.handleAddRoomItemClick}
         onItemClick={this.handleJoinRoomItemClick}
         {...this.props}
       />
@@ -136,7 +107,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      setRoomFormVisibility,
       setRoom,
       getSubscribedRooms
     },

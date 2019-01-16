@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { showRoomList } from '../../actions';
+import { showRoomList, setRoomFormVisibility } from '../../actions';
 import RoomForm from './RoomForm';
 import SubscribedRoomList from './SubscribedRoomList';
 import Avatar from '@material-ui/core/Avatar';
 import styled from 'styled-components';
 import { Typography, IconButton, Button } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
 import MapSharp from '@material-ui/icons/MapSharp';
 import { bindActionCreators } from 'redux';
 
@@ -19,8 +20,15 @@ class Lobby extends Component {
     super(props);
   }
   render() {
-    const { showRoomForm, user } = this.props;
+    const {
+      showRoomForm,
+      showRoomList,
+      setRoomFormVisibility,
+      user
+    } = this.props;
+
     const { username } = user;
+
     return (
       <LobbyWrapper className={this.props.className}>
         {showRoomForm ? (
@@ -42,7 +50,14 @@ class Lobby extends Component {
               <div style={{ marginLeft: 'auto' }}>
                 <Button
                   onClick={() => {
-                    this.props.showRoomList();
+                    setRoomFormVisibility(true);
+                  }}
+                >
+                  <ChatBubbleOutline fontSize="large" />
+                </Button>
+                <Button
+                  onClick={() => {
+                    showRoomList();
                   }}
                 >
                   <MapSharp style={{ fontSize: 30 }} />
@@ -68,7 +83,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      showRoomList
+      showRoomList,
+      setRoomFormVisibility
     },
     dispatch
   );
