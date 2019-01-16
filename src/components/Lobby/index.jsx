@@ -36,10 +36,13 @@ class Lobby extends Component {
         ) : (
           <div>
             <div style={{ display: 'flex', padding: '15px' }}>
-              <Avatar>{username.charAt(0).toUpperCase()}</Avatar>
+              <Avatar style={{ margin: '5px' }}>
+                {username.charAt(0).toUpperCase()}
+              </Avatar>
               <Button
                 variant="text"
                 style={{
+                  margin: '5px 0',
                   padding: '0px 15px',
                   height: '40px',
                   textTransform: 'none'
@@ -48,22 +51,22 @@ class Lobby extends Component {
                 <Typography variant="headline">{username}</Typography>
               </Button>
               <div style={{ marginLeft: 'auto' }}>
-                <Button
+                <IconButton
                   onClick={() => {
                     setRoomFormVisibility(true);
                   }}
                 >
-                  <ChatBubbleOutline fontSize="large" />
-                </Button>
-                <Button
+                  <ChatBubbleOutline style={{ fontSize: 30 }} />
+                </IconButton>
+                <IconButton
                   onClick={() => {
                     showRoomList();
                   }}
                 >
                   <MapSharp style={{ fontSize: 30 }} />
-                </Button>
+                </IconButton>
                 <IconButton>
-                  <MoreVertIcon />
+                  <MoreVertIcon style={{ fontSize: 30 }} />
                 </IconButton>
               </div>
             </div>
