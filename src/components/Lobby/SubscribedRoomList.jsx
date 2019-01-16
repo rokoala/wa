@@ -14,11 +14,9 @@ import { withStyles } from '@material-ui/core/styles';
 import {
   setRoomFormVisibility,
   setRoom,
-  getSubscribedRooms,
-  showRoomList
+  getSubscribedRooms
 } from '../../actions';
 import ChatBubbleOutline from '@material-ui/icons/ChatBubbleOutline';
-import MapSharp from '@material-ui/icons/MapSharp';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { bindActionCreators } from 'redux';
@@ -99,14 +97,6 @@ const SubscribedRoomList = props => {
           );
         })}
       </List>
-      <Divider />
-      <Button
-        onClick={() => {
-          showRoomList();
-        }}
-      >
-        <MapSharp style={{ fontSize: 50 }} />
-      </Button>
     </React.Fragment>
   );
 };
@@ -148,8 +138,7 @@ const mapDispatchToProps = dispatch =>
     {
       setRoomFormVisibility,
       setRoom,
-      getSubscribedRooms,
-      showRoomList
+      getSubscribedRooms
     },
     dispatch
   );

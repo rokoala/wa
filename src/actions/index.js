@@ -76,11 +76,14 @@ export const addRoom = _room => {
   };
 
   return dispatch =>
-    api.socketIOEmit('addRoom', room).then(response => {
-      dispatch(addRoomSuccess(response));
-      dispatch(setRoom(response));
-      dispatch(setRoomFormVisibility(false));
-    });
+    api
+      .socketIOEmit('addRoom', room)
+      .then(response => {
+        dispatch(addRoomSuccess(response));
+        dispatch(setRoom(response));
+        dispatch(setRoomFormVisibility(false));
+      })
+      .catch(err => console.error(err));
 };
 
 export const receivedRooms = rooms => ({

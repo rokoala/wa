@@ -4,15 +4,14 @@ const ClientManager = require('./ClientManager');
 const SocketHandler = (io, socket, { id, username }) => {
   const userId = id;
 
-  ClientManager.getSubscribedRooms(userId).forEach(room => {
-    console.log(room);
-    socket.join(room.id);
-  });
-
   // Check if the user is logged
-  socket.use((packet, next) => {
-    if (userId) return next();
-    next(new Error('not authorized'));
+  // socket.use((packet, next) => {
+  //   if (userId) return next();
+  //   next(new Error('not authorized'));
+  // });
+
+  ClientManager.getSubscribedRooms(userId).forEach(room => {
+    socket.join(room.id);
   });
 
   socket.on('addRoom', (room, callback) => {

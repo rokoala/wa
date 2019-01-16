@@ -7,8 +7,14 @@ import thunk from 'redux-thunk';
 
 const persistedState = {
   app: {
-    user: {},
-    chatEnabled: false,
+    user: {
+      id: '1',
+      subscribedRooms: [],
+      username: 'joao'
+    },
+    chatEnabled: true,
+    // user: {},
+    // chatEnabled: false,
     roomInfo: false,
     room: null,
     showRoomForm: false,

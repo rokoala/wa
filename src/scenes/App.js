@@ -7,7 +7,7 @@ import Chat from '../components/Chat';
 import Lobby from '../components/Lobby';
 import Login from '../components/Login';
 import Geolocation from '../resources/Geolocation';
-import { setLocation } from '../actions';
+import { setLocation, appLogin } from '../actions';
 import styled from 'styled-components';
 
 const StyledLobby = styled(Lobby)`
@@ -32,6 +32,9 @@ class App extends Component {
         console.error('Error to get geolocation, error:' + err);
       }
     );
+
+    // REMOVE THIS
+    this.props.appLogin('joao', 'teste');
   }
   render() {
     const { chatEnabled, location } = this.props;
@@ -53,7 +56,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({ setLocation }, dispatch);
+  bindActionCreators({ setLocation, appLogin }, dispatch);
 
 export default connect(
   mapStateToProps,
